@@ -10,36 +10,22 @@ function MenuComponent() {
     }
   
     return (
-        <Menu secondary>
-        <Menu.Item
-          name='home'
-          active={activeTab === 'home'}
-          onClick={()=>onclickTab('home')}
-        />
-        <Menu.Item
-          name='messages'
-          active={activeTab === 'messages'}
-          onClick={()=>onclickTab('messages')}
-        />
-        <Menu.Item
-          name='friends'
-          active={activeTab=== 'friends'}
-          onClick={()=>onclickTab('friends')}
-        />
+        <Menu secondary pointing>
+        <Menu.Item name='home' active={activeTab === 'home'} onClick={()=>onclickTab('home')}/>
+        <Menu.Item name='createform' active={activeTab === 'messages'} onClick={()=>onclickTab('messages')} />
+        <Menu.Item  name='respondedForm' active={activeTab=== 'friends'} onClick={()=>onclickTab('friends')} />
         <Menu.Menu position='right'>
-          <Menu.Item>
-            <Input icon='search' placeholder='Search...' />
-          </Menu.Item>
+         
           
-     <Menu.Item>
-        <Dropdown item icon="user">
-          <Dropdown.Menu>
-            <Dropdown.Header>Text Size</Dropdown.Header>
-            <Dropdown.Item>Small</Dropdown.Item>
-            <Dropdown.Item>Medium</Dropdown.Item>
-            <Dropdown.Item>logout</Dropdown.Item>
-          </Dropdown.Menu>
-        </Dropdown>
+        <Menu.Item>
+          <Dropdown item icon="user">
+             <Dropdown.Menu>
+              <Dropdown.Header>userName</Dropdown.Header>
+               <Dropdown.Item>settings</Dropdown.Item>
+               <Dropdown.Item>change password</Dropdown.Item>
+               <Dropdown.Item>logout</Dropdown.Item>
+              </Dropdown.Menu>
+          </Dropdown>
         </Menu.Item>
         </Menu.Menu>
       </Menu>

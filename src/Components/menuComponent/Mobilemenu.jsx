@@ -17,7 +17,7 @@ function MobileMenu() {
         </Dropdown>
        
         <Menu.Item  position="left">
-        <Image  avatar />
+         
          </Menu.Item>
 
 

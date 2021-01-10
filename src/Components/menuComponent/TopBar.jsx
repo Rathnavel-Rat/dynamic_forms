@@ -1,6 +1,6 @@
 import React from 'react'
 import MobileMenu from './Mobilemenu'
-import {Container} from 'semantic-ui-react'
+//import {Container} from 'semantic-ui-react'
 import {Media,MediaContextProvider,mediaStyles } from '../../gloabalsMediaProvider'
 import MenuComponent from './Menu'
 import {  Switch, Route,BrowserRouter as Router} from 'react-router-dom';
@@ -11,8 +11,6 @@ import {  Switch, Route,BrowserRouter as Router} from 'react-router-dom';
         <div> 
           <style>{mediaStyles}</style>
           <MediaContextProvider>
-              
-         <Container>
                 <Router>
                    <Media   greaterThan="mobile">
                       <MenuComponent/>
@@ -30,8 +28,7 @@ import {  Switch, Route,BrowserRouter as Router} from 'react-router-dom';
                        <Route path="/Home"></Route>
                   </Switch>
                   </Router>
-                 
-         </Container>
+ 
          </MediaContextProvider>
         </div>
     )
