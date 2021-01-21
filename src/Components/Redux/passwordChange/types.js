@@ -1,0 +1,6 @@
+export const PASSWORD_REQUEST="PasswordRequest"
+export const PASSWORD_REQ_SUCCESS="PasswordReqSuccess"
+export const PASSWORD_REQ_FAILURE="PasswordReqFail"
+export const PASSWORD_RESET_REQUEST="PasswordReset"
+export const PASSWORD_RESET_SUCCESS="PasswordResetSuccess"
+export const PASSWORD_RESET_FAILURE="PasswordResetSuccess"
