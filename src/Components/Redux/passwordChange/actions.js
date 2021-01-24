@@ -57,7 +57,7 @@ export const PasswordRequestAPI=(data)=>{
                .catch(error=>{
                 try {
                    
-                    if(error.response.data!=null){
+                    if(error.response.data!==null){
                         dispatch(passwordChangeReqFaiure(error.response.data["detail"]))
                     }
                 }
@@ -79,7 +79,7 @@ export const PasswordResetAPI=(data)=>{
            }
       }
     ).catch(error=>{
-        if(error.response.status!=404)
+        if(error.response.status!==404)
           dispatch(passwordResetSuccess("password reset Successfully"))
         else
          dispatch(passwordResetSuccess("Try again later"))
