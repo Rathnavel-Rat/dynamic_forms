@@ -1,5 +1,10 @@
 export const  items=[
     {
+        id:"label",
+        name:"label",
+        icon:"label",
+    },
+    {
         id:"inputtext",
         name:"text",
         icon:"text cursor",
