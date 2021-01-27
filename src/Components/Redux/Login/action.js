@@ -32,9 +32,8 @@ export const LoginApiCall=(data)=>{
                 try{
 
                    dispatch(loginSuccess(response.data))
-                   console.log(response.data.data["access_token"])
-                   console.log(response.data.data["refresh_token"])
                    dispatch(userDetails(response.data))
+                   console.log("dfsff",response.data)
                 }
                 catch(e){
                     dispatch(loginFailure("try again later"))

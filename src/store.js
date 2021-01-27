@@ -3,7 +3,8 @@ import rootReducers from "./Components/RootReducer/RootReducer";
 import  thunk from 'redux-thunk'
 import logger from 'redux-logger'
 import { composeWithDevTools } from "redux-devtools-extension";
-//import { LoginRequestreducer } from "./Components/Redux/Register/reducers";
+import {persistedReducer} from './Components/PresistedReducers/PresistedReducers'
+import { persistStore } from 'redux-persist'
 
-const store=createStore(rootReducers,composeWithDevTools(applyMiddleware(thunk,logger)))
-export default store
+export const store=createStore(persistedReducer,composeWithDevTools(applyMiddleware(thunk,logger)))
+export  const persistor = persistStore(store)

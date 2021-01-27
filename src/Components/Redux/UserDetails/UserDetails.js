@@ -20,7 +20,7 @@ export const userDetailReducer=(state=initState,action)=>{
                 ...state,
                 username:action.payload.data["username"],
                 email:action.payload.data["email"],
-                uid:action.payload.data["uid"],
+                uid:action.payload.data["id"],
                 islogin:true,
 
             }

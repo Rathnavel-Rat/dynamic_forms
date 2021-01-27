@@ -1,6 +1,6 @@
 import React from 'react'
 import { Draggable, Droppable } from 'react-beautiful-dnd'
-import {  Divider, Icon, Image, List, Search, Segment } from 'semantic-ui-react'
+import {   List, Search, Segment } from 'semantic-ui-react'
 import { items } from './ListInput'
 const styledDrag=(isDragging,prestyle)=>({
     display: "flex",
@@ -54,6 +54,7 @@ function Toolbox() {
                        <div ref={provided.innerRef} {...provided.droppableProps} isDraggingOver={snapshot.isDraggingOver}  >
                         <Toolboxlist items={items} snapshot={snapshot}/>
                         
+                        {provided.placeholder}
                        </div>
                             
 

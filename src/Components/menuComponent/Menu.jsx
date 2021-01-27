@@ -5,12 +5,13 @@ import { Menu,Dropdown, Button, } from 'semantic-ui-react'
 
 function MenuComponent(props) {
     const [activeTab, setactiveTab] = useState('home')
-    var onclickTab=(name)=>{
+    const onclickTab = (name) => {
         setactiveTab(name)
-    }
-  
-    var userdata=useSelector(state=>state.userdetails)
-  
+    };
+
+    const userdata = useSelector(state => state.userdetails);
+    console.log("userdata",userdata.islogin)
+
     return (
        
         <Menu secondary pointing>

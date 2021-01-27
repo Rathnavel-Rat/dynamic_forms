@@ -30,7 +30,7 @@ export const  items=[
     {
         id:"inputdate",
         name:"date",
-        icon:"calendar outline icon",
+        icon:'calendar check outline',
     },
     {
         id:"inputrange",

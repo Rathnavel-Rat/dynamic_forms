@@ -1,13 +1,17 @@
 import React from 'react'
 import { DragDropContext, Droppable } from 'react-beautiful-dnd'
-import {  Grid } from 'semantic-ui-react'
+import {  Grid, Segment } from 'semantic-ui-react'
+import ItemDrops from './ItemDrops'
 import Toolbox from './Toolbox'
 
 function Home() {
+    const dragEndCall=(e)=>{
+        console.log(e)
+    }
     return (
         <div>
-            <DragDropContext >
-            <Grid>
+            <DragDropContext onDragEnd={dragEndCall} >
+            <Grid celled stackable >
                 <Grid.Row  stretched columns={2}> 
             {/*  toolbox*/ }
         
@@ -18,9 +22,9 @@ function Home() {
                 </Grid.Column > 
             
               {/* WA*/ }
-               <Grid.Column >
-               
-             </Grid.Column>
+               <Grid.Column widescreen>                   
+                    <ItemDrops/>
+                </Grid.Column>
             
              </Grid.Row>
           </Grid>

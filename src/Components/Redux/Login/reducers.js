@@ -23,9 +23,7 @@ export const LoginRequestReducers=(state=initialState,action)=>{
                 data:action.payload,
                 message:"login success",
                 islogin:true
-             
-                
-                
+               
             }
         case LOGIN_FAILURE:
             return{

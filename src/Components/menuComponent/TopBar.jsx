@@ -3,12 +3,13 @@ import MobileMenu from './Mobilemenu'
 
 import {Media,MediaContextProvider,mediaStyles } from '../../gloabalsMediaProvider'
 import MenuComponent from './Menu'
-import {  Switch, Route,BrowserRouter as Router} from 'react-router-dom';
+import {  Switch, Route,BrowserRouter as Router,Redirect} from 'react-router-dom';
 import Register from '../RegComponent/Register'
 import Login from '../Logincomponent/Login';
 import Password from '../Forgetpassword/Password';
 import Passwordreset from '../Forgetpassword/PasswordReset/Passwordreset';
 import Home from '../CreateForms/Home';
+import { useSelector } from 'react-redux';
 
 
 
@@ -29,15 +30,15 @@ import Home from '../CreateForms/Home';
                       <MobileMenu/>
                   </Media>
                   <Switch>
-                      <Route path="/createForm"><Home/></Route>
-                       <Route path="/RespondedForm"></Route>
+                       <PrivateRoute  component={Home} path="/createForm"/>
+                       <Route  path="/RespondedForm"/>
                        <Route path="/userSettings"></Route>
-                       <Route path="/ForgotPassword"><Password/></Route>
-                       <Route path="/Login"><Login/></Route>
+                       <PublicRoute restricted={false} path="/ForgotPassword" component={Password}/>
+                       <PublicRoute restricted={true} path="/Login" component={Login} exact/>
+                       <PublicRoute restricted={true} path="/Register" component={Register} exact/> 
+                       <PublicRoute restricted={false} path="/passwordReset:token_valid?/:message?/:uid64?/:token?" component={Passwordreset}/>
                        <Route path="/Logout"></Route>
-                       <Route path="/Register"><Register/></Route> 
-                       <Route path="/passwordReset:token_valid?/:message?/:uid64?/:token?"><Passwordreset/></Route>
-                       <Route path="/Logout"></Route>
+                       
                   </Switch>
                   </Router>
  
@@ -52,3 +53,20 @@ export default TopBar;
 
 
 
+const PrivateRoute = ({component: Component, ...rest}) => {
+    const login=useSelector(state=>state.userdetails)
+    return (
+        <Route {...rest} render={props => (login.islogin ? <Component {...props} /> : <Redirect to="/Login" />
+        )} />
+    );
+};
+
+const PublicRoute = ({component: Component, restricted, ...rest}) => {
+    const login=useSelector(state=>state.userdetails)
+    return (
+        // restricted = false meaning public route
+        // restricted = true meaning restricted route
+        <Route {...rest} render={props => ((login.islogin && restricted) ?  <Redirect to="/CreateForm" /> : <Component {...props} />
+        )} />
+    );
+};
