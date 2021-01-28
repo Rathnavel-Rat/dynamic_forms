@@ -9,9 +9,9 @@ function ItemDrops() {
         <Droppable   style={{height:"500px"}} droppableId="workingArea" >
         {(provided,snapshot )=>(
                <div ref={provided.innerRef} {...provided.droppableProps} isDraggingOver={snapshot.isDraggingOver}  >
-                 <div style={{height:"500px",backgroundColor:"#333"}}>
+                 <Container style={{height:"500px",backgroundColor:"#333"}}>
 
-                 </div>
+                 </Container>
 
                 {provided.placeholder}
                </div>

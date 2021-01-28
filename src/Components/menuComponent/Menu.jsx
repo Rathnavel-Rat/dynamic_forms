@@ -35,9 +35,7 @@ function MenuComponent(props) {
           <Menu.Menu>
          <Menu.Item as={NavLink} to="/createForm" name='createform' active={activeTab === 'createform'} onClick={()=>onclickTab('createform')} />
          <Menu.Item as={NavLink} to="/respondedForm" name="respondedForm" active={activeTab=== 'respondedForm'} onClick={()=>onclickTab('respondedForm')} /></Menu.Menu>
-        ):(
-          null
-        )
+        ):null
         }
         { userdata.islogin  ? 
         (
@@ -56,8 +54,8 @@ function MenuComponent(props) {
         ):
         ( 
         <Menu.Menu position="right">
-        <Button as={NavLink} active={activeTab === 'login'} to='/login' onClick={()=>onclickTab('login')} color="teal">LOGIN</Button>
-        <Button as={NavLink} active={activeTab === 'Register'} to="/Register" onClick={()=>onclickTab('Register')}  color="twitter">Register</Button>
+        <Button as={NavLink} active={activeTab === 'login'} to='/login' onClick={()=>onclickTab('login')} color="teal">SignIn</Button>
+        <Button as={NavLink} active={activeTab === 'Register'} to="/Register" onClick={()=>onclickTab('Register')}  color="twitter">SignUp</Button>
         </Menu.Menu>)
        }
       </Menu>
