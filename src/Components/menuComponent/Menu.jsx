@@ -1,13 +1,26 @@
 import React,{ useState} from 'react'
 import { useSelector } from 'react-redux'
-import { NavLink, Link,withRouter } from 'react-router-dom'
+import { NavLink, Link,withRouter, useHistory} from 'react-router-dom'
 import { Menu,Dropdown, Button, } from 'semantic-ui-react'
+import Axios from '../axiosConfig'
 
 function MenuComponent(props) {
     const [activeTab, setactiveTab] = useState('home')
+    const history=useHistory()
     const onclickTab = (name) => {
         setactiveTab(name)
     };
+    const logout=()=>{
+
+      Axios().post("authentication/logout").then(
+        response=>{
+          history.push('/Login')
+          
+        }
+      ).catch(err=>{
+
+      })
+    }
 
     const userdata = useSelector(state => state.userdetails);
     console.log("userdata",userdata.islogin)
@@ -35,7 +48,7 @@ function MenuComponent(props) {
                 <Dropdown.Item >{userdata.email}</Dropdown.Item>
                  <Dropdown.Item as={Link} to="/userSettings" >settings</Dropdown.Item>
                  <Dropdown.Item as={Link} to="">change password</Dropdown.Item>
-                 <Dropdown.Item >logout</Dropdown.Item>
+                 <Dropdown.Item as={Button} onClick={()=>logout()} >logout</Dropdown.Item>
                 </Dropdown.Menu>
             </Dropdown>
           </Menu.Item>
