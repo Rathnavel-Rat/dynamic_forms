@@ -17,10 +17,10 @@ function Register(props) {
   const {register,errors,handleSubmit,trigger,setValue,control}=useForm();
     const [validError, setvalidError] = useState(null)
     useEffect(() => {
-      register({ name: "username" }, { required: {value:true,message:"Please Fill"} });
-      register({ name: "email" }, { required: {value:true,message:"Please Fill"}, pattern:  {value:/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,message:"Invalid E-mail Id"}});
-      register({name:  "password"},{ required: {value:true,message:"Please Fill"} });
-      register({name:  "confrimpassword"},{ required: {value:true,message:"Please Fill"} });
+      register({ name: "username" }, { required: {value:true,message:"UserName required"} });
+      register({ name: "email" }, { required: {value:true,message:"email id required"}, pattern:  {value:/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,message:"Invalid E-mail Id"}});
+      register({name:  "password"},{ required: {value:true,message:"password required"} });
+      register({name:  "confrimpassword"},{ required: {value:true,message:"password reuired"} });
     
     }, );
     const valid=async (e, { name, value }) => {
@@ -52,17 +52,17 @@ function Register(props) {
         <Segment stacked>
           <Controller defaultValue="" control={control} as={Form.Input} name="username" fluid icon='user' iconPosition='left' placeholder='username' onChange={valid} error={errors.username ? true :false} />
           {errors.username && errors.username.message}
-          <Controller defaultValue="" control={control} as={Form.Input}  name="email" fluid icon='mail' iconPosition='left'  placeholder='email' onChange={valid} error={errors.email ? true :false}/>
+          <Controller defaultValue="" control={control} as={Form.Input}  name="email" fluid icon='mail' iconPosition='left'  placeholder='Email Id' onChange={valid} error={errors.email ? true :false}/>
           {errors.email && errors.email.message}
           <Controller defaultValue="" control={control} as={Form.Input}  name="password" fluid icon='lock' iconPosition='left'    placeholder='Password' type='password' onChange={valid} error={errors.password ? true :false} />
           {errors.password && errors.password.message}
-          <Controller defaultValue="" control={control} as={Form.Input} name="confrimpassword" fluid icon='lock' iconPosition='left'    placeholder='Password' type='password' onChange={valid} error={errors.confrimpassword ? true :false} />
+          <Controller defaultValue="" control={control} as={Form.Input} name="confrimpassword" fluid icon='lock' iconPosition='left'    placeholder='confrim Password' type='password' onChange={valid} error={errors.confrimpassword ? true :false} />
           {errors.confrimpassword && errors.confrimpassword.message}
           <Button color='blue' fluid size='large'>
             Register
           </Button>
          {validError ? <Label>{validError}</Label> :""}
-         Existing User<a href="!#" onClick={()=>onclickSignIn()}> Sign Up</a>
+         Existing User<a href="!#" onClick={()=>onclickSignIn()}> Sign In</a>
         </Segment>
       </Form>
         <Message>

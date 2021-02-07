@@ -12,8 +12,8 @@ function Login(props) {
 
   useEffect(() => {
      
-      register({ name: "password" }, { required: {value:true,message:"Please Fill"}});
-      register({name:"email"},{required:{value:true,message:"PleaseFill"},pattern:  {value:/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,message:"Invalid E-mail Id"}})
+      register({ name: "password" }, { required: {value:true,message:"Password required"}});
+      register({name:"email"},{required:{value:true,message:"Email id required"},pattern:  {value:/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,message:"Invalid E-mail Id"}})
   }, );
  
   const valid=async (e, { name, value }) => {
@@ -54,7 +54,7 @@ function Login(props) {
       <Grid textAlign='center' style={{ height: '80vh' }} verticalAlign='middle'>
       <Grid.Column style={{ maxWidth: 450 }} >
         <Header as='h2' textAlign='center'>
-          Sign-in to your account
+          Sign-in
         </Header>
         <Form size='large' onSubmit={handleSubmit(submitTo)}>
         <Segment stacked>

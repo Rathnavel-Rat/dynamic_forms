@@ -1,0 +1,58 @@
+syntax = "proto3";
+
+message ListFields{
+    repeated Field fields=1;
+}
+message Field{
+    int64 uid=1;
+    oneof types{
+        Radio radio=2;
+        Checkbox checkbox=3;
+        Text text=4;
+        Date date=5;
+        Range range=6;
+        string label=7;
+        Number number=8;
+        Image image=9;
+    }
+}
+message Radio{
+    
+   int64 NumOfOption=1;
+   map<int32,string> values=2;
+   string label=3;
+
+}
+message Checkbox{
+    int64 NumOfOption=1;
+    map<int32,string> values=2;
+    string label=3;
+}
+
+message Text{
+    string type=1;
+    map<string,validator> valid=2;  
+    string label=3;
+}
+message validator{
+    string validation=1;
+    string error=2;
+}
+message Date{
+     string value=1;
+     string label=2;
+}
+message Range{
+    int64 from=1;
+    int64 to=2;
+    string label=3;
+}
+
+message Number{
+    int32 min=1;
+    int64 max=2;
+}
+
+message Image{
+    string ImageUrl=1;
+}

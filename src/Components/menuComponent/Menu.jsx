@@ -1,8 +1,9 @@
 import React,{ useState} from 'react'
-import { useSelector } from 'react-redux'
+import { useSelector,useDispatch } from 'react-redux'
 import { NavLink, Link,withRouter, useHistory} from 'react-router-dom'
 import { Menu,Dropdown, Button, } from 'semantic-ui-react'
-import Axios from '../axiosConfig'
+import {LogoutApiCall} from "../Redux/UserDetails/UserDetails";
+
 
 function MenuComponent(props) {
     const [activeTab, setactiveTab] = useState('home')
@@ -10,16 +11,10 @@ function MenuComponent(props) {
     const onclickTab = (name) => {
         setactiveTab(name)
     };
+    const dispatch = useDispatch()
     const logout=()=>{
+      dispatch(LogoutApiCall())
 
-      Axios().post("authentication/logout").then(
-        response=>{
-          history.push('/Login')
-          
-        }
-      ).catch(err=>{
-
-      })
     }
 
     const userdata = useSelector(state => state.userdetails);

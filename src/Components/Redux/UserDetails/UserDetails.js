@@ -1,4 +1,7 @@
+import Axios from "../../axiosConfig"
+
 const USER_DETAILS="USER_DETAILS"
+const LOGOUT="LOGOUT"
 
 export const userDetails=(data)=>{
     return{
@@ -6,11 +9,16 @@ export const userDetails=(data)=>{
         payload:data
     }
 }
+export const logout=()=>{
+    return{
+        type:LOGOUT,
+        
+    }
+}
 
 const initState={
     username:{},
     email:{},
-    uid:{},
     islogin:false,
 }
 export const userDetailReducer=(state=initState,action)=>{
@@ -22,9 +30,27 @@ export const userDetailReducer=(state=initState,action)=>{
                 email:action.payload.data["email"],
                 uid:action.payload.data["id"],
                 islogin:true,
-
+            }
+        case LOGOUT:
+            return{
+                islogin:false,
             }
         default: return state
+    }
+}
+
+export const LogoutApiCall=()=>{
+    return (dispatch)=>{
+        console.log("Sdas")
+        Axios().post("authentication/logout").then(
+            response=>{
+                console.log(response)
+                dispatch(logout())
+            }
+          ).catch(err=>{
+    
+          })
+       
     }
 }
 

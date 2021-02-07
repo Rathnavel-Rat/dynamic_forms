@@ -89,15 +89,12 @@ function Toolboxlist({items,snapshot}) {
                                 ):(
            <Draggable key={item.id} draggableId={item.id} index={i}    >
             {(provided, snapshot) => (
-                            <List.Item >
+                            <List.Item key={item.id} >
                               <div ref={provided.innerRef} 
                                        {...provided.draggableProps} 
                                        {...provided.dragHandleProps} 
                                        isDragging={snapshot.isDraggingOver}
-                                       style={styledDrag(
-                                        snapshot.isDragging,
-                                        provided.draggableProps.style
-                                      )}
+                                       style={styledDrag( snapshot.isDragging,provided.draggableProps.style)}
                                        >
            
                                   <List.Content>

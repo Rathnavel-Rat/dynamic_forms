@@ -1,43 +1,20 @@
 import React from 'react'
-import { ConnectForm } from '../formconnect'
+import { Radio } from 'semantic-ui-react';
+import {createUUID} from '../protobuf/DummyData'
 
 
-export  function InputText({name,idd}) {
-    return (
-        <ConnectForm>
-            <input type="text"></input>
-        </ConnectForm>
-    )
-}
+export const ProtoRadiobutton=({Map})=>{
+    const arr=[]
+    Map.forEach(function(v, k) {
+      arr.push(v)
+  });
 
-export  function InputEmail() {
-    return (
-        <ConnectForm>
-            <input type="text"></input>
-        </ConnectForm>
-    )
-}
-
-export  function InputText() {
-    return (
-        <ConnectForm>
-            <input type="text"></input>
-        </ConnectForm>
-    )
-}
-
-export  function InputText() {
-    return (
-        <ConnectForm>
-            <input type="text"></input>
-        </ConnectForm>
-    )
-}
-
-export  function InputText() {
-    return (
-        <ConnectForm>
-            <input type="text"></input>
-        </ConnectForm>
-    )
+  return(
+      <div>
+        <input type="text" name="11" placeholder="enter the question" style={{backgroundColor:"transparent",border:"none"}}  />
+         { arr.map((item,i)=>(<Radio name={id}  label={item}/>))
+         }
+      </div>
+    
+  )
 }

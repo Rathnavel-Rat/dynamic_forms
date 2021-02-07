@@ -8,6 +8,7 @@
     "@testing-library/react": "^11.2.3",
     "@testing-library/user-event": "^12.6.0",
     "axios": "^0.21.1",
+    "google-protobuf": "^3.14.0",
     "protobufjs": "^6.10.2",
     "react": "^17.0.1",
     "react-beautiful-dnd": "^13.0.0",
