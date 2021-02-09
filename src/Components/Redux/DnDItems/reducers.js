@@ -1,6 +1,7 @@
 import { act } from "react-dom/test-utils"
 import { DEL_ALL_DRAGS, DRAG_EDITS, DRAG_END } from "./type"
 
+
 const initstate={
     fields:[]
 }

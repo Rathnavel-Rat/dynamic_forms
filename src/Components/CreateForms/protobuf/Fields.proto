@@ -4,7 +4,8 @@ message ListFields{
     repeated Field fields=1;
 }
 message Field{
-    int64 uid=1;
+    string uid=1;
+    string render_Func=13;
     oneof types{
         Radio radio=2;
         Checkbox checkbox=3;
@@ -15,6 +16,7 @@ message Field{
         Number number=8;
         Image image=9;
     }
+    
 }
 message Radio{
     

@@ -1,20 +1,25 @@
 import React from 'react'
-import { Radio } from 'semantic-ui-react';
-import {createUUID} from '../protobuf/DummyData'
+import { Form, Radio } from 'semantic-ui-react';
 
 
-export const ProtoRadiobutton=({Map})=>{
-    const arr=[]
-    Map.forEach(function(v, k) {
-      arr.push(v)
-  });
+export class RenderProto{
+  constructor(){
+    this.RenderRadio= function(item){
+      console.log("poos",)
+      const arr=[]
+      item.getRadio().getValuesMap().forEach(function(v, k) {
+        arr.push(v)
+    });
+  
+    return(
+        <Form.Field>
+          <Form.Input type="text" name="11" placeholder={item.getRadio().getLabel()} style={{backgroundColor:"transparent",border:"none"}}  />
+           { arr.map((e,i)=>(<Form.Radio name={item.getUid()}  label={e}/>))
+           }
+        </Form.Field>
+      
+    )
+    }
 
-  return(
-      <div>
-        <input type="text" name="11" placeholder="enter the question" style={{backgroundColor:"transparent",border:"none"}}  />
-         { arr.map((item,i)=>(<Radio name={id}  label={item}/>))
-         }
-      </div>
-    
-  )
+  }
 }

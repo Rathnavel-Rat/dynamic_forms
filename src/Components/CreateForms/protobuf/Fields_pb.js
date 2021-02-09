@@ -459,7 +459,8 @@ proto.Field.prototype.toObject = function(opt_includeInstance) {
  */
 proto.Field.toObject = function(includeInstance, msg) {
   var f, obj = {
-    uid: jspb.Message.getFieldWithDefault(msg, 1, 0),
+    uid: jspb.Message.getFieldWithDefault(msg, 1, ""),
+    renderFunc: jspb.Message.getFieldWithDefault(msg, 13, ""),
     radio: (f = msg.getRadio()) && proto.Radio.toObject(includeInstance, f),
     checkbox: (f = msg.getCheckbox()) && proto.Checkbox.toObject(includeInstance, f),
     text: (f = msg.getText()) && proto.Text.toObject(includeInstance, f),
@@ -505,8 +506,12 @@ proto.Field.deserializeBinaryFromReader = function(msg, reader) {
     var field = reader.getFieldNumber();
     switch (field) {
     case 1:
-      var value = /** @type {number} */ (reader.readInt64());
+      var value = /** @type {string} */ (reader.readString());
       msg.setUid(value);
+      break;
+    case 13:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setRenderFunc(value);
       break;
     case 2:
       var value = new proto.Radio;
@@ -577,9 +582,16 @@ proto.Field.prototype.serializeBinary = function() {
 proto.Field.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
   f = message.getUid();
-  if (f !== 0) {
-    writer.writeInt64(
+  if (f.length > 0) {
+    writer.writeString(
       1,
+      f
+    );
+  }
+  f = message.getRenderFunc();
+  if (f.length > 0) {
+    writer.writeString(
+      13,
       f
     );
   }
@@ -650,20 +662,38 @@ proto.Field.serializeBinaryToWriter = function(message, writer) {
 
 
 /**
- * optional int64 uid = 1;
- * @return {number}
+ * optional string uid = 1;
+ * @return {string}
  */
 proto.Field.prototype.getUid = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 1, 0));
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
 };
 
 
 /**
- * @param {number} value
+ * @param {string} value
  * @return {!proto.Field} returns this
  */
 proto.Field.prototype.setUid = function(value) {
-  return jspb.Message.setProto3IntField(this, 1, value);
+  return jspb.Message.setProto3StringField(this, 1, value);
+};
+
+
+/**
+ * optional string render_Func = 13;
+ * @return {string}
+ */
+proto.Field.prototype.getRenderFunc = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 13, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.Field} returns this
+ */
+proto.Field.prototype.setRenderFunc = function(value) {
+  return jspb.Message.setProto3StringField(this, 13, value);
 };
 
 

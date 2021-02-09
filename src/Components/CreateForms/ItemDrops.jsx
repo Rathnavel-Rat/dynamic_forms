@@ -1,9 +1,10 @@
 import React,{useState} from 'react'
 import { Draggable, Droppable } from 'react-beautiful-dnd'
 import { useDispatch, useSelector } from 'react-redux'
-import { Card, Container,Button, Modal, List, Segment,Image, Label, } from 'semantic-ui-react'
+import { Card, Container,Button, Modal, List, Segment,Image, Label, Form, } from 'semantic-ui-react'
 import { DragEdit, RemoveAllDrags } from '../Redux/DnDItems/action'
 import { DRAG_EDITS } from '../Redux/DnDItems/type'
+import { RenderProto } from './Fields/staticinputs'
 
 
 function ItemDrops() {
@@ -12,7 +13,7 @@ function ItemDrops() {
   //dispatch(RemoveAllDrags())
 
     return (
-        <Segment >
+        <Segment>
           <Label size={50} onClick={()=>dispatch(RemoveAllDrags())} color="red" attached="top right" style={{paddingRight:"18px",height:"10Ppx"}} icon="remove"  corner="right" removeIcon />
           
         <Droppable isCombineEnabled={true}  style={{height:"500px"}} droppableId="workingArea" >
@@ -20,7 +21,7 @@ function ItemDrops() {
         {(provided,snapshot )=>(
       
                <div ref={provided.innerRef} {...provided.droppableProps} isDraggingOver={snapshot.isDraggingOver}  >
-                 <Container style={{height:"500px",backgroundColor:"#fff"}}>
+                 <Container as={Form} style={{height:"500px",backgroundColor:"#fff"}}>
                     <DropList snapshot={snapshot} items={DnD.fields}></DropList>
                  </Container>
 
@@ -47,12 +48,12 @@ export default ItemDrops
     <List  divided={snapshot.isDragging} verticalAlign='middle'>
 
         {items.map((item,i)=>{
-              
+              console.log("pps",item)
             return (
              
-             <Draggable key={item.uid} draggableId={item.uid} index={i}>
+             <Draggable key={item.getUid()} draggableId={item.getUid()} index={i}>
             {(provided, snapshot) => (
-                      <List.Item key={item.uid}>
+                      <List.Item key={item.getUid()}>
                           <div ref={provided.innerRef} 
                             {...provided.draggableProps} isDragging={snapshot.isDraggingOver}
                             isDragging={snapshot.isDraggingOver}   style={provided.draggableProps.style}  >
@@ -71,10 +72,13 @@ export default ItemDrops
 
 
 function EachItem({item,provided}) {
- 
+
+  var nRenderProto=new RenderProto()
+  var g=nRenderProto[String(item.getRenderFunc())](item)
+
   return (
                                <Card textAlign="left"  >
-                                 <Card.Header content={item.id}></Card.Header>
+                            
                                  <Label color="orange" ribbon style={{width:"min-content"}} icon="align justify" {...provided.dragHandleProps} />
         
                                  <Label attached="bottom right"   color="red" style={{width:"min-content"}} icon="trash alternate"  />  <br></br>   
@@ -83,6 +87,7 @@ function EachItem({item,provided}) {
                                       trigger={<Label  attached="top right"   color="green" style={{width:"min-content"}} icon="edit"/> }
                                       actions={CustomModalActions(item=item)}
                                      />
+                                   {g}
                                  
                                 </Card>
   )

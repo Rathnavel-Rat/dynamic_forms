@@ -6,12 +6,15 @@ import ItemDrops from './ItemDrops'
 import radio, { createUUID } from './protobuf/DummyData'
 import Toolbox from './Toolbox'
 import {DragItemAdd} from '../Redux/DnDItems/action'
+import { items as Tools } from './ListInput'
+import { GetAction } from './actions'
 
 
 function Home() {
 
     const  DnD= useSelector(state => state.dnd)
     const dispatch = useDispatch()
+    var actions=new GetAction()
 
     const dragEndCall=(result)=>{
         
@@ -21,8 +24,8 @@ function Home() {
         }
         console.log(result)
         if(source.droppableId!=destination.droppableId){
-            var data=MapperTags(draggableId)
-            dispatch(DragItemAdd(data))
+            var data=actions[String(Tools.find(e=>e.id===draggableId).action)]()
+           dispatch(DragItemAdd(data))
             
                         
         }
