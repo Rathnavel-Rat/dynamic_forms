@@ -5,7 +5,6 @@ import { Form, Radio } from 'semantic-ui-react';
 export class RenderProto{
   constructor(){
     this.RenderRadio= function(item){
-      console.log("poos",)
       const arr=[]
       item.getRadio().getValuesMap().forEach(function(v, k) {
         arr.push(v)
