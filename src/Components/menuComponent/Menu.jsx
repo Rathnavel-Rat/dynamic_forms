@@ -7,7 +7,6 @@ import {LogoutApiCall} from "../Redux/UserDetails/UserDetails";
 
 function MenuComponent(props) {
     const [activeTab, setactiveTab] = useState('home')
-    const history=useHistory()
     const onclickTab = (name) => {
         setactiveTab(name)
     };

@@ -1,5 +1,5 @@
-import { createUUID } from "./protobuf/DummyData"
-import {Field,Radio} from "./protobuf/Fields_pb"
+import { createUUID } from "./protobuf/utils"
+import {Field,Radio,Number,Text,validator,Checkbox,DropDown,Date,Label} from "./protobuf/Fields_pb"
 
 export class GetAction {
     constructor() {
@@ -16,10 +16,84 @@ export class GetAction {
             nField.setUid(createUUID())
             nField.setRadio(nRadio)
             nField.setRenderFunc('RenderRadio')
-            
+            return nField;
+        }
+        this.GetNumber=function () {
+            const  nNumber=new Number()
+            nNumber.setLabel("enter the min and max for number Field");
+            nNumber.setMin(0)
+            nNumber.setMax(100)
+
+            const nField = new Field()
+            nField.setUid(createUUID())
+            nField.setNumber(nNumber)
+            nField.setRenderFunc('RenderNumber')
             return nField;
 
         }
+      this.GetText =function (isEmail) {
+            const nText=new Text()
+            console.log("love me  ",isEmail)
+            nText.setLabel("Enter your label ")
+            var valid=new validator()
+            valid.setValidation("true")
+            valid.setError("not to be empty")
+            var valid1=new validator()
+            valid1.setValidation("^[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,4}$")
+            valid1.setError("email id required")
+            nText.getValidMap().set("required",valid);
+            if(isEmail)
+            nText.getValidMap().set("pattern",valid1)
+            nText.setType("email")
+
+            const nField = new Field()
+            nField.setUid(createUUID())
+            nField.setText(nText)
+            nField.setRenderFunc('RenderText')
+            return nField;
+
+      }
+      this.GetCheckBox=function () {
+            const nChekBox=new Checkbox()
+            nChekBox.setLabel("Enter you check box value")
+            const nField = new Field()
+            nField.setUid(createUUID())
+            nField.setCheckbox(nChekBox)
+            nField.setRenderFunc('RenderCheckBox')
+            return nField;
+
+      }
+      this.GetDrop=function () {
+                const nDropDown=new DropDown()
+                nDropDown.setLabel("Edit ur own text")
+                nDropDown.addItems("one")
+                nDropDown.addItems("two")
+                const nField = new Field()
+                nField.setUid(createUUID())
+                nField.setDropdown(nDropDown)
+                nField.setRenderFunc('RenderDropDown')
+            return nField;
+      }
+      this.GetDate=function () {
+                const nDate=new Date()
+                nDate.setLabel("Choose Your Date")
+                const nField = new Field()
+                nField.setUid(createUUID())
+                nField.setDate(nDate)
+                nField.setRenderFunc('RenderDate')
+          return nField;
+
+      }
+      this.GetLabel=function () {
+            const  nlabel =new Label()
+            nlabel.setValue("Enter some label text")
+            const nField = new Field()
+            nField.setUid(createUUID())
+            nField.setLabel(nlabel)
+            nField.setRenderFunc('RenderLabel')
+
+        return nField;
+      }
 
     }
 }

@@ -7,7 +7,6 @@ const initstate={
 }
 
 export const DndReducers=(state=initstate,action)=>{
-    console.log(action.data)
     switch(action.type){
         
         case DRAG_END:

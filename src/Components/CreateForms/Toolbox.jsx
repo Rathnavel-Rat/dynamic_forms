@@ -14,7 +14,7 @@ const styledDrag=(isDragging,prestyle)=>({
     background: `#fff`,
     border: `1px ${(isDragging ? 'dashed #333' : 'solid #ed58e8')}`,
     ...prestyle,
-})
+});
 
 const getRenderItem = (items) => (provided, snapshot, rubric) => {
     const item = items[rubric.source.index];

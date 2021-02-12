@@ -1,13 +1,3 @@
-import {Radio} from './Fields_pb'
-
-const radio=new Radio()
-radio.setNumofoption(4)
-radio.getValuesMap().set(1,"one")
-radio.getValuesMap().set(2,"two")
-radio.getValuesMap().set(3,"three")
-radio.getValuesMap().set(4,"four")
-
-export default radio;
 
 
 export function createUUID() {

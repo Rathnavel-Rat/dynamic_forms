@@ -12,12 +12,16 @@ message Field{
         Text text=4;
         Date date=5;
         Range range=6;
-        string label=7;
+        Label label=7;
         Number number=8;
         Image image=9;
+        DropDown dropdown=10;
     }
     
 }
+message  Label{
+    string value=1;
+    }
 message Radio{
     
    int64 NumOfOption=1;
@@ -26,9 +30,7 @@ message Radio{
 
 }
 message Checkbox{
-    int64 NumOfOption=1;
-    map<int32,string> values=2;
-    string label=3;
+    string label=1;
 }
 
 message Text{
@@ -51,10 +53,16 @@ message Range{
 }
 
 message Number{
-    int32 min=1;
-    int64 max=2;
+    string label=1;
+    int32 min=2;
+    int64 max=3;
 }
 
 message Image{
     string ImageUrl=1;
+}
+message DropDown{
+    repeated  string items=1;
+    string label=2;
+
 }

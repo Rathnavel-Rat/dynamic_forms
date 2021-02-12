@@ -23,7 +23,7 @@ export const  items=[
         id:"inputemail",
         name:"email",
         icon:"mail",
-        action:"GetEmail",
+        action:"GetText",
 
     },
     {
@@ -54,6 +54,11 @@ export const  items=[
         name:"image",
         icon:"image",
         action:"GetImage",
+    },{
+       id:"dropDown",
+       name:"dropdown",
+       icon:"drop",
+       action:"GetDrop",
     }
 
 ]

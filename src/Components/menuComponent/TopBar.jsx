@@ -32,12 +32,12 @@ import { useSelector } from 'react-redux';
                   <Switch>
                        <PrivateRoute  component={Home} path="/createForm"/>
                        <Route  path="/RespondedForm"/>
-                       <Route path="/userSettings"></Route>
+                       <Route path="/userSettings"/>
                        <PublicRoute restricted={false} path="/ForgotPassword" component={Password}/>
                        <PublicRoute restricted={true} path="/Login" component={Login} exact/>
                        <PublicRoute restricted={true} path="/Register" component={Register} exact/> 
                        <PublicRoute restricted={false} path="/passwordReset:token_valid?/:message?/:uid64?/:token?" component={Passwordreset}/>
-                       <Route path="/Logout"></Route>
+                       <Route path="/Logout"/>
                        
                   </Switch>
                   </Router>
