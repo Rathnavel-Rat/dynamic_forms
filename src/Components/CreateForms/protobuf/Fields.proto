@@ -25,7 +25,7 @@ message  Label{
 message Radio{
     
    int64 NumOfOption=1;
-   map<int32,string> values=2;
+   repeated string values=2;
    string label=3;
 
 }
@@ -50,6 +50,7 @@ message Range{
     int64 from=1;
     int64 to=2;
     string label=3;
+    int32 multiples=4;
 }
 
 message Number{

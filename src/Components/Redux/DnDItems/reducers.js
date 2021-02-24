@@ -1,5 +1,4 @@
-import { act } from "react-dom/test-utils"
-import { DEL_ALL_DRAGS, DRAG_EDITS, DRAG_END } from "./type"
+import { DEL_ALL_DRAGS,DEL_AN_DRAGS, DRAG_EDITS, DRAG_ITEM_CHANGE_POSITION } from "./type"
 
 
 const initstate={
@@ -8,28 +7,27 @@ const initstate={
 
 export const DndReducers=(state=initstate,action)=>{
     switch(action.type){
-        
-        case DRAG_END:
 
-            return{
-                ...state,
-                fields:[...state.fields,action.data]
-            }
+
         case DRAG_EDITS:
-            const index = state.fields.findIndex(e => e.uid === action.data.uid); //finding index of the item
-            const newArray = [...state.fields]; //making a new array
-            newArray[index].modalOpen=action.data.modalOpen//changing value in the new array
-        
-           
             return {
                 ...state,
-                fields:newArray
-                
-            }                
+            }         
+        case DEL_AN_DRAGS:        
+            const removedItem= state.fields.filter(e => e.getUid() !== action.data)        
+            return{
+                fields:removedItem
+            }
+
         case DEL_ALL_DRAGS:
             return{
                 fields:[],
-            }    
+            }  
+          
+        case DRAG_ITEM_CHANGE_POSITION:
+            return{
+                fields:action.data
+            }
         default:
             return state;
     }

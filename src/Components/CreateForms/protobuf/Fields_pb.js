@@ -101,7 +101,7 @@ if (goog.DEBUG && !COMPILED) {
  * @constructor
  */
 proto.Radio = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+  jspb.Message.initialize(this, opt_data, 0, -1, proto.Radio.repeatedFields_, null);
 };
 goog.inherits(proto.Radio, jspb.Message);
 if (goog.DEBUG && !COMPILED) {
@@ -1222,6 +1222,13 @@ proto.Label.prototype.setValue = function(value) {
 
 
 
+/**
+ * List of repeated fields within this message type.
+ * @private {!Array<number>}
+ * @const
+ */
+proto.Radio.repeatedFields_ = [2];
+
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
@@ -1254,7 +1261,7 @@ proto.Radio.prototype.toObject = function(opt_includeInstance) {
 proto.Radio.toObject = function(includeInstance, msg) {
   var f, obj = {
     numofoption: jspb.Message.getFieldWithDefault(msg, 1, 0),
-    valuesMap: (f = msg.getValuesMap()) ? f.toObject(includeInstance, undefined) : [],
+    valuesList: (f = jspb.Message.getRepeatedField(msg, 2)) == null ? undefined : f,
     label: jspb.Message.getFieldWithDefault(msg, 3, "")
   };
 
@@ -1297,10 +1304,8 @@ proto.Radio.deserializeBinaryFromReader = function(msg, reader) {
       msg.setNumofoption(value);
       break;
     case 2:
-      var value = msg.getValuesMap();
-      reader.readMessage(value, function(message, reader) {
-        jspb.Map.deserializeBinary(message, reader, jspb.BinaryReader.prototype.readInt32, jspb.BinaryReader.prototype.readString, null, 0, "");
-         });
+      var value = /** @type {string} */ (reader.readString());
+      msg.addValues(value);
       break;
     case 3:
       var value = /** @type {string} */ (reader.readString());
@@ -1342,9 +1347,12 @@ proto.Radio.serializeBinaryToWriter = function(message, writer) {
       f
     );
   }
-  f = message.getValuesMap(true);
-  if (f && f.getLength() > 0) {
-    f.serializeBinary(2, writer, jspb.BinaryWriter.prototype.writeInt32, jspb.BinaryWriter.prototype.writeString);
+  f = message.getValuesList();
+  if (f.length > 0) {
+    writer.writeRepeatedString(
+      2,
+      f
+    );
   }
   f = message.getLabel();
   if (f.length > 0) {
@@ -1375,25 +1383,40 @@ proto.Radio.prototype.setNumofoption = function(value) {
 
 
 /**
- * map<int32, string> values = 2;
- * @param {boolean=} opt_noLazyCreate Do not create the map if
- * empty, instead returning `undefined`
- * @return {!jspb.Map<number,string>}
+ * repeated string values = 2;
+ * @return {!Array<string>}
  */
-proto.Radio.prototype.getValuesMap = function(opt_noLazyCreate) {
-  return /** @type {!jspb.Map<number,string>} */ (
-      jspb.Message.getMapField(this, 2, opt_noLazyCreate,
-      null));
+proto.Radio.prototype.getValuesList = function() {
+  return /** @type {!Array<string>} */ (jspb.Message.getRepeatedField(this, 2));
 };
 
 
 /**
- * Clears values from the map. The map will be non-null.
+ * @param {!Array<string>} value
  * @return {!proto.Radio} returns this
  */
-proto.Radio.prototype.clearValuesMap = function() {
-  this.getValuesMap().clear();
-  return this;};
+proto.Radio.prototype.setValuesList = function(value) {
+  return jspb.Message.setField(this, 2, value || []);
+};
+
+
+/**
+ * @param {string} value
+ * @param {number=} opt_index
+ * @return {!proto.Radio} returns this
+ */
+proto.Radio.prototype.addValues = function(value, opt_index) {
+  return jspb.Message.addToRepeatedField(this, 2, value, opt_index);
+};
+
+
+/**
+ * Clears the list making it empty but non-null.
+ * @return {!proto.Radio} returns this
+ */
+proto.Radio.prototype.clearValuesList = function() {
+  return this.setValuesList([]);
+};
 
 
 /**
@@ -2091,7 +2114,8 @@ proto.Range.toObject = function(includeInstance, msg) {
   var f, obj = {
     from: jspb.Message.getFieldWithDefault(msg, 1, 0),
     to: jspb.Message.getFieldWithDefault(msg, 2, 0),
-    label: jspb.Message.getFieldWithDefault(msg, 3, "")
+    label: jspb.Message.getFieldWithDefault(msg, 3, ""),
+    multiples: jspb.Message.getFieldWithDefault(msg, 4, 0)
   };
 
   if (includeInstance) {
@@ -2140,6 +2164,10 @@ proto.Range.deserializeBinaryFromReader = function(msg, reader) {
       var value = /** @type {string} */ (reader.readString());
       msg.setLabel(value);
       break;
+    case 4:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setMultiples(value);
+      break;
     default:
       reader.skipField();
       break;
@@ -2187,6 +2215,13 @@ proto.Range.serializeBinaryToWriter = function(message, writer) {
   if (f.length > 0) {
     writer.writeString(
       3,
+      f
+    );
+  }
+  f = message.getMultiples();
+  if (f !== 0) {
+    writer.writeInt32(
+      4,
       f
     );
   }
@@ -2244,6 +2279,24 @@ proto.Range.prototype.getLabel = function() {
  */
 proto.Range.prototype.setLabel = function(value) {
   return jspb.Message.setProto3StringField(this, 3, value);
+};
+
+
+/**
+ * optional int32 multiples = 4;
+ * @return {number}
+ */
+proto.Range.prototype.getMultiples = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 4, 0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.Range} returns this
+ */
+proto.Range.prototype.setMultiples = function(value) {
+  return jspb.Message.setProto3IntField(this, 4, value);
 };
 
 

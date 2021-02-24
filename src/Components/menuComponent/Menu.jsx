@@ -17,7 +17,6 @@ function MenuComponent(props) {
     }
 
     const userdata = useSelector(state => state.userdetails);
-    console.log("userdata",userdata.islogin)
 
     return (
        

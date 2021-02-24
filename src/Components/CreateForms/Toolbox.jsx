@@ -94,8 +94,7 @@ function Toolboxlist({items,snapshot}) {
                                        {...provided.draggableProps} 
                                        {...provided.dragHandleProps} 
                                        isDragging={snapshot.isDraggingOver}
-                                       style={styledDrag( snapshot.isDragging,provided.draggableProps.style)}
-                                       >
+                                       style={styledDrag( snapshot.isDragging,provided.draggableProps.style)}>
            
                                   <List.Content>
                                       <List.Icon name={item.icon}/> <List.Header>{item.name}</List.Header>

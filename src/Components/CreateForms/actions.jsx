@@ -1,15 +1,15 @@
 import { createUUID } from "./protobuf/utils"
-import {Field,Radio,Number,Text,validator,Checkbox,DropDown,Date,Label} from "./protobuf/Fields_pb"
+import {Field,Radio,Number,Text,validator,Checkbox,DropDown,Date,Label,Range} from "./protobuf/Fields_pb"
 
 export class GetAction {
     constructor() {
         this.GetRadio = function () {
             const nRadio = new Radio()
             nRadio.setNumofoption(4)
-            nRadio.getValuesMap().set(1, "one")
-            nRadio.getValuesMap().set(2, "two")
-            nRadio.getValuesMap().set(3, "three")
-            nRadio.getValuesMap().set(4, "four")
+            nRadio.addValues("one")
+            nRadio.addValues( "two")
+            nRadio.addValues("three")
+            nRadio.addValues( "four")
             nRadio.setLabel("enter the question")
 
             const nField = new Field()
@@ -33,7 +33,6 @@ export class GetAction {
         }
       this.GetText =function (isEmail) {
             const nText=new Text()
-            console.log("love me  ",isEmail)
             nText.setLabel("Enter your label ")
             var valid=new validator()
             valid.setValidation("true")
@@ -92,6 +91,19 @@ export class GetAction {
             nField.setLabel(nlabel)
             nField.setRenderFunc('RenderLabel')
 
+        return nField;
+      }
+      this.GetRange=function(){
+        const nRange =new Range()
+        nRange.setFrom(0)
+        nRange.setTo(100)
+        nRange.setMultiples(1)
+        nRange.setLabel("Enter the label or text for Range")
+        const nField = new Field()
+        nField.setUid(createUUID())
+        nField.setRange(nRange)
+        nField.setRenderFunc('RenderRange')
+    
         return nField;
       }
 
