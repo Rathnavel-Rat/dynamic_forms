@@ -1,4 +1,4 @@
-import React,{useReducer} from 'react'
+import React,{memo,useReducer} from 'react'
 import { Draggable, Droppable } from 'react-beautiful-dnd'
 import { useDispatch, useSelector } from 'react-redux'
 import {Button, Modal, Segment,Image, Label, Form, Header, } from 'semantic-ui-react'
@@ -8,6 +8,9 @@ import { RenderProto } from './Fields/RenderFields'
 import {EditRenderField} from "./Fields/EditsFields";
 import { useForm, useFormContext, FormProvider, Controller } from "react-hook-form";
 import Axios from "../axiosConfig";
+import {ExceptionList} from "./Fields/ExceptionList";
+
+
 
 function bufferToBase64(buffer) {
     const binary = String.fromCharCode.apply(null, buffer);
@@ -33,7 +36,7 @@ function ItemDrops() {
    const serialized=nlistFields.serializeBinary()//save in Database
 
       const data={"data":bufferToBase64(serialized)}
-      console.log("poos",data,serialized)
+      console.log("pogo",data,serialized)
 
      Axios().post("dynamicforms/saveform",data,{"content-type": 'multipart/form-data'}).then(e=>{
 
@@ -104,7 +107,7 @@ export default ItemDrops
           )}
 
 
-function EachItem({item,provided}) {
+const  EachItem=({item,provided}) =>{
 
     const nRenderProto = new RenderProto();
     const field = nRenderProto[String(item.getRenderFunc())](item);
@@ -135,20 +138,22 @@ function exampleReducer(state, action) {
     }
 }
 
-const CustomModal=({item})=>{
+const CustomModal=memo(({item})=>{
 
     const[state,dispatches]=useReducer(exampleReducer,{isOpen:false,item:item})
     const nEditRenderField=new EditRenderField()
-    const render=nEditRenderField[String(item.getRenderFunc())](item)
-
+    let render=null;
+    if (!ExceptionList.includes(String(item.getRenderFunc())) )
+        render= nEditRenderField[String(item.getRenderFunc())](item)
 
     return (
+
         <Modal
             closeIcon
 
             open={state.isOpen}
             onClose={() => dispatches({type:"CLOSE"})}
-            trigger={<Label onClick={()=>dispatches({type:"OPEN"})} attached="top right"  color="yellow" style={{width:"min-content"}} icon="edit"  /> }>
+            trigger={render!==null?<Label onClick={()=>dispatches({type:"OPEN"})} attached="top right"  color="yellow" style={{width:"min-content"}} icon="edit"  />:null}>
             <Modal.Header>Make Your Changes</Modal.Header>
             <Modal.Content>
                 {render}
@@ -156,5 +161,5 @@ const CustomModal=({item})=>{
         </Modal>
     )
 
-}
+})
 

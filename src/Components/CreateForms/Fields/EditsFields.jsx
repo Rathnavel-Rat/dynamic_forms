@@ -1,13 +1,11 @@
-import Button from "semantic-ui-react/dist/commonjs/elements/Button";
-import {memo} from "react";
-import {Memolabel,MemoRadio} from './MemoEditFields'
+import {Memolabel, MemoNumber, MemoRadio,MemoCheckbox,MemoDropDown,MemoDate} from './MemoEditFields'
 export class EditRenderField{
     constructor() {
-        this.RenderLabel = function (item) {
-            return <Memolabel item={item}/>
-        }
-        this.RenderRadio=function (item) {
-            return <MemoRadio item={item}/>
-        }
+        this.RenderLabel = (item)=> {return <Memolabel item={item}/>}
+        this.RenderRadio=(item)=> {return <MemoRadio item={item}/>}
+        this.RenderNumber=(item)=>{return <MemoNumber item={item}/>}
+        this.RenderCheckBox=(item)=>{return<MemoCheckbox item={item}/>}
+        this.RenderDropDown=(item)=>{return<MemoDropDown item={item}/>}
+        this.RenderDate=(item)=>{return <MemoDate item={item}/>}
     }
 }

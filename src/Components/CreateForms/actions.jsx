@@ -33,12 +33,12 @@ export class GetAction {
         }
       this.GetText =function (isEmail) {
             const nText=new Text()
-            nText.setLabel("Enter your label ")
-            var valid=new validator()
+            nText.setLabel("Email ")
+            const valid = new validator();
             valid.setValidation("true")
             valid.setError("not to be empty")
-            var valid1=new validator()
-            valid1.setValidation("^[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,4}$")
+          const valid1 = new validator();
+          valid1.setValidation("^[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,4}$")
             valid1.setError("email id required")
             nText.getValidMap().set("required",valid);
             if(isEmail)

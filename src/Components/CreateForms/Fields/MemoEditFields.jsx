@@ -32,7 +32,6 @@ export const MemoRadio=memo(function({item}){
     const {register,reset,handleSubmit}=useForm();
     const dispatch=useDispatch();
     const Radio=item.getRadio()
-    console.log("sd",Radio.getLabel())
     const AddValue=(e)=>{
         Radio.setLabel(e.label)
         Radio.addValues(e.val)
@@ -71,3 +70,105 @@ export const MemoRadio=memo(function({item}){
       )
 })
 
+export  const MemoNumber=memo(({item})=>{
+    const {register,reset,handleSubmit}=useForm();
+    const dispatch=useDispatch();
+    const Number=item.getNumber();
+    const save=(e)=>{
+        Number.setLabel(e.label)
+        Number.setMax(e.maximum)
+        Number.setMin(e.minimum)
+        reset()
+        dispatch(DragEdit())
+    }
+    return(
+        <div>
+            <Form onSubmit={handleSubmit(save)}>
+                <input ref={register()} required name="label"  defaultValue={Number.getLabel().toString()}  />
+                <input placeholder="min" defaultValue={`${Number.getMin()}`} name="minimum" type="number" ref={register({required:true})}   />
+                <input placeholder="max" defaultValue={`${Number.getMax()}`} name="maximum" type="number" ref={register({required:true})}   />
+                <input type="submit" />
+            </Form>
+        </div>
+    )
+})
+
+export  const MemoCheckbox=({item})=>{
+    const {register,handleSubmit}=useForm();
+    const dispatch=useDispatch();
+    const CheckBox=item.getCheckbox();
+    const Save=(e)=>{
+        CheckBox.setLabel(e.checkbox)
+        dispatch(DragEdit())
+    }
+    return(
+        <div>
+            <Form onSubmit={handleSubmit(Save)}>
+                <input type="text" defaultValue={CheckBox.getLabel()} placeholder={"current value:"+CheckBox.getLabel().toString()}  name="checkbox" ref={register({required:true})}/>
+                <input type="submit"/>
+            </Form>
+        </div>
+    )
+}
+export  const MemoDropDown=({item})=> {
+    const {register, reset,handleSubmit} = useForm()
+    const dispatch = useDispatch();
+    const DropDown = item.getDropdown();
+
+    const AddValue=(e)=>{
+        DropDown.setLabel(e.dropdownLabel)
+        DropDown.addItems(e.val)
+        reset()
+        dispatch(DragEdit())
+    }
+    const DeleteAnItemFromList=  (pos) => {
+        const s = [...DropDown.getItemsList().slice(0, pos).concat(DropDown.getItemsList().slice(pos + 1, DropDown.getItemsList().length))]
+        DropDown.clearItemsList()
+        DropDown.setItemsList(s)
+        reset()
+        dispatch(DragEdit())
+    }
+    return (
+        <div>
+            <div>
+                <Form onSubmit={handleSubmit(AddValue)}>
+                    <input type="text" defaultValue={DropDown.getLabel()} placeholder={"current value:" + DropDown.getLabel().toString()} name="dropdownLabel" ref={register({required: true})}/>
+                    <Container>
+                        <List >
+                            {DropDown.getItemsList().map((e,i)=>(
+                                <List.Item key={i} >
+                                    <Icon name='remove' onClick={()=>DeleteAnItemFromList(i)} color="blue"/>
+                                    <List.Content>
+                                        {e}
+                                    </List.Content>
+
+                                </List.Item>
+                            ))}
+                        </List>
+                    </Container>
+                    <input ref={register({ required: true})} required name="val" placeholder="Enter a value to add to list"  />
+                    <input type="submit"/>
+                </Form>
+            </div>
+        </div>
+    )
+}
+
+
+export  const MemoDate=({item})=>{
+    const {register,handleSubmit}=useForm();
+    const dispatch=useDispatch();
+    const Date=item.getDate();
+    const Save=(e)=>{
+        Date.setLabel(e.date)
+        dispatch(DragEdit())
+    }
+    return(
+        <div>
+            <Form onSubmit={handleSubmit(Save)}>
+                <input type="text" defaultValue={Date.getLabel()} placeholder={"current value:"+Date.getLabel().toString()}  name="date" ref={register({required:true})}/>
+                <input type="submit"/>
+            </Form>
+        </div>
+    )
+}
