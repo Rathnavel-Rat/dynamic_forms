@@ -1,4 +1,4 @@
-import { createUUID } from "./protobuf/utils"
+import { createFieldUUID } from "./protobuf/utils"
 import {Field,Radio,Number,Text,validator,Checkbox,DropDown,Date,Label,Range} from "./protobuf/Fields_pb"
 
 export class GetAction {
@@ -13,7 +13,7 @@ export class GetAction {
             nRadio.setLabel("enter the question")
 
             const nField = new Field()
-            nField.setUid(createUUID())
+            nField.setUid(createFieldUUID())
             nField.setRadio(nRadio)
             nField.setRenderFunc('RenderRadio')
             return nField;
@@ -25,7 +25,7 @@ export class GetAction {
             nNumber.setMax(100)
 
             const nField = new Field()
-            nField.setUid(createUUID())
+            nField.setUid(createFieldUUID())
             nField.setNumber(nNumber)
             nField.setRenderFunc('RenderNumber')
             return nField;
@@ -46,7 +46,7 @@ export class GetAction {
             nText.setType("email")
 
             const nField = new Field()
-            nField.setUid(createUUID())
+            nField.setUid(createFieldUUID())
             nField.setText(nText)
             nField.setRenderFunc('RenderText')
             return nField;
@@ -56,7 +56,7 @@ export class GetAction {
             const nChekBox=new Checkbox()
             nChekBox.setLabel("Enter you check box value")
             const nField = new Field()
-            nField.setUid(createUUID())
+            nField.setUid(createFieldUUID())
             nField.setCheckbox(nChekBox)
             nField.setRenderFunc('RenderCheckBox')
             return nField;
@@ -68,7 +68,7 @@ export class GetAction {
                 nDropDown.addItems("one")
                 nDropDown.addItems("two")
                 const nField = new Field()
-                nField.setUid(createUUID())
+                nField.setUid(createFieldUUID())
                 nField.setDropdown(nDropDown)
                 nField.setRenderFunc('RenderDropDown')
             return nField;
@@ -77,7 +77,7 @@ export class GetAction {
                 const nDate=new Date()
                 nDate.setLabel("Choose Your Date")
                 const nField = new Field()
-                nField.setUid(createUUID())
+                nField.setUid(createFieldUUID())
                 nField.setDate(nDate)
                 nField.setRenderFunc('RenderDate')
           return nField;
@@ -87,7 +87,7 @@ export class GetAction {
             const  nlabel =new Label()
             nlabel.setValue("Enter some label text")
             const nField = new Field()
-            nField.setUid(createUUID())
+            nField.setUid(createFieldUUID())
             nField.setLabel(nlabel)
             nField.setRenderFunc('RenderLabel')
 
@@ -100,7 +100,7 @@ export class GetAction {
         nRange.setMultiples(1)
         nRange.setLabel("Enter the label or text for Range")
         const nField = new Field()
-        nField.setUid(createUUID())
+        nField.setUid(createFieldUUID())
         nField.setRange(nRange)
         nField.setRenderFunc('RenderRange')
     

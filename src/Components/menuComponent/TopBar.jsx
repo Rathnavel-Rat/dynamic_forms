@@ -11,6 +11,8 @@ import Passwordreset from '../Forgetpassword/PasswordReset/Passwordreset';
 import Home from '../CreateForms/Home';
 import { useSelector } from 'react-redux';
 
+import CreateForm from "../CreateForms/createForm";
+
 
 
  function TopBar() {
@@ -31,6 +33,7 @@ import { useSelector } from 'react-redux';
                   </Media>
                   <Switch>
                        <PrivateRoute  component={Home} path="/createForm"/>
+                       <PrivateRoute component={CreateForm} path="/createdForms"/>
                        <Route  path="/RespondedForm"/>
                        <Route path="/userSettings"/>
                        <PublicRoute restricted={false} path="/ForgotPassword" component={Password}/>
@@ -64,8 +67,6 @@ const PrivateRoute = ({component: Component, ...rest}) => {
 const PublicRoute = ({component: Component, restricted, ...rest}) => {
     const login=useSelector(state=>state.userdetails)
     return (
-        // restricted = false meaning public route
-        // restricted = true meaning restricted route
         <Route {...rest} render={props => ((login.islogin && restricted) ?  <Redirect to="/CreateForm" /> : <Component {...props} />
         )} />
     );

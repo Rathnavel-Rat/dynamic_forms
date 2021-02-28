@@ -9,12 +9,12 @@ import {EditRenderField} from "./Fields/EditsFields";
 import { useForm, useFormContext, FormProvider, Controller } from "react-hook-form";
 import Axios from "../axiosConfig";
 import {ExceptionList} from "./Fields/ExceptionList";
+import {createForm_UUID} from "./protobuf/utils";
 
 
 
 function bufferToBase64(buffer) {
     const binary = String.fromCharCode.apply(null, buffer);
-    console.log(window.btoa(binary).length)
     return window.btoa(binary);
 }
 function base64ToArrayBuffer(base64) { // use while rerender
@@ -34,11 +34,8 @@ function ItemDrops() {
    const nlistFields=new ListFields()
    nlistFields.setFieldsList(DnD.fields)
    const serialized=nlistFields.serializeBinary()//save in Database
-
       const data={"data":bufferToBase64(serialized)}
-      console.log("pogo",data,serialized)
-
-     Axios().post("dynamicforms/saveform",data,{"content-type": 'multipart/form-data'}).then(e=>{
+     Axios().post("dynamicforms/saveform",data,).then(e=>{
 
    }).catch(er=>{console.log(er)})
   }

@@ -27,7 +27,7 @@ function Home() {
 
     const  DnD= useSelector(state => state.dnd)
     const dispatch = useDispatch()
-    var actions=new GetAction()
+    const actions = new GetAction();
 
     const dragEndCall=(result)=>{
         

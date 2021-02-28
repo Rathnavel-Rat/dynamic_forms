@@ -1,5 +1,4 @@
-
-import { LOGIN_FAILURE, LOGIN_REQUEST, LOGIN_SUCCESS } from "./types"
+import {LOGIN_FAILURE, LOGIN_REQUEST, LOGIN_SUCCESS} from "./types"
 import Axios from "../../axiosConfig";
 import {userDetails} from "../UserDetails/UserDetails"
 
@@ -33,7 +32,7 @@ export const LoginApiCall=(data)=>{
 
                    dispatch(loginSuccess(response.data))
                    dispatch(userDetails(response.data))
-                   console.log("dfsff",response.data)
+
                 }
                 catch(e){
                     dispatch(loginFailure("try again later"))
@@ -47,9 +46,8 @@ export const LoginApiCall=(data)=>{
                 try {
                    
                    if(error.response.data!=null) {
-                       var email_data=error.response.data["detail"]
-                       var error_message=email_data  
-                       dispatch(loginFailure(error_message))
+                       const email_data = error.response.data["detail"];
+                       dispatch(loginFailure(email_data))
                     }}
                 catch(e){
                       dispatch(loginFailure("Try again later"))
