@@ -10,7 +10,7 @@ const CreateForm = () => {
          dispatch(CreatedFormAPICall())
     },[])
     return (
-        <Segment verticalAlign="middle"   fluid text  textAlign="center" >
+        <Segment verticalAlign="top"   fluid text  textAlign="center" >
             <List animated  >
             {data.data.map(e=>(
                 <List.Item as={Card} >
