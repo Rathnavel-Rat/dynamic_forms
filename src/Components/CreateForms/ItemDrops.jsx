@@ -1,7 +1,7 @@
 import React,{memo,useReducer} from 'react'
 import { Draggable, Droppable } from 'react-beautiful-dnd'
 import { useDispatch, useSelector } from 'react-redux'
-import {Button, Modal, Segment,Image, Label, Form, Header, } from 'semantic-ui-react'
+import { Modal, Segment,Image, Label, Form, Header, } from 'semantic-ui-react'
 import {DeleteAnDrags, RemoveAllDrags, SetDragItem} from '../Redux/DnDItems/action'
 import {ListFields} from './protobuf/Fields_pb'
 import { RenderProto } from './Fields/RenderFields'
@@ -9,24 +9,10 @@ import {EditRenderField} from "./Fields/EditsFields";
 import { useForm, useFormContext, FormProvider, Controller } from "react-hook-form";
 import Axios from "../axiosConfig";
 import {ExceptionList} from "./Fields/ExceptionList";
-import {createForm_UUID} from "./protobuf/utils";
+import {modalReducer} from "../ModalReducer/ModalReducer";
+import {base64ToArrayBuffer,bufferToBase64} from "./utils";
 
 
-
-function bufferToBase64(buffer) {
-    const binary = String.fromCharCode.apply(null, buffer);
-    return window.btoa(binary);
-}
-function base64ToArrayBuffer(base64) { // use while rerender
-    const binary_string = window.atob(base64);
-    const len = binary_string.length;
-    const bytes = new Uint8Array(len);
-    for (let i = 0; i < len; i++) {
-        bytes[i] = binary_string.charCodeAt(i);
-    }
-    console.log(bytes.buffer)
-    return bytes;
-}
 function ItemDrops() {
   const  DnD= useSelector(state => state.dnd)
   const dispatch = useDispatch()
@@ -45,7 +31,7 @@ function ItemDrops() {
           <Segment>
           <Label size={50} onClick={()=>dispatch(RemoveAllDrags())} color="red" attached="top right" style={{paddingRight:"18px",height:"10Ppx"}} icon="remove"   removeIcon />
           <Header> Drag Items from toolbar and place here </Header>
-          <Label size={50} onClick={()=>onSave()} color="green" attached="top left" style={{paddingRight:"18px",height:"10Ppx"}} icon="save"   removeIcon />
+          <Label size={50} onClick={()=>onSave()} color="green" attached="top left" style={{paddingRight:"18px",height:"10Ppx"}} icon="save"   />
           </Segment>
           
         <Droppable  isCombineEnabled={true}  style={{height:"500px"}} droppableId="workingArea" >
@@ -124,30 +110,19 @@ const  EachItem=({item,provided}) =>{
   )
 }
 
-function exampleReducer(state, action) {
-    switch (action.type) {
-        case 'OPEN':
-            return { ...state, isOpen: true }
-        case 'CLOSE':
-            return { ...state, isOpen: false }
-        default:
-           return state
-    }
-}
+
 
 const CustomModal=memo(({item})=>{
 
-    const[state,dispatches]=useReducer(exampleReducer,{isOpen:false,item:item})
+    const[state,dispatches]=useReducer(modalReducer,{isOpen:false,item:item})
     const nEditRenderField=new EditRenderField()
     let render=null;
     if (!ExceptionList.includes(String(item.getRenderFunc())) )
         render= nEditRenderField[String(item.getRenderFunc())](item)
 
     return (
-
         <Modal
             closeIcon
-
             open={state.isOpen}
             onClose={() => dispatches({type:"CLOSE"})}
             trigger={render!==null?<Label onClick={()=>dispatches({type:"OPEN"})} attached="top right"  color="yellow" style={{width:"min-content"}} icon="edit"  />:null}>

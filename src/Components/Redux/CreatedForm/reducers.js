@@ -1,4 +1,4 @@
-import {REQUEST_CREATED_FORM, REQUEST_CREATED_FORM_FAILURE, REQUEST_CREATED_FORM_SUCCESS} from "./type";
+import {ADD_NEW_FORM, REQUEST_CREATED_FORM, REQUEST_CREATED_FORM_FAILURE, REQUEST_CREATED_FORM_SUCCESS} from "./type";
 
 const initState={
     loading:false,
@@ -26,6 +26,10 @@ export const CreatedFormReducer=(state=initState,action)=>{
                 ...state,
                 message: "Try again"
             }
+        case ADD_NEW_FORM:
+            return{
+                ...state,
+        }
         default:
             return state
     }

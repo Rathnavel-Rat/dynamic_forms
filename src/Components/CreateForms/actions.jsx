@@ -1,4 +1,4 @@
-import { createFieldUUID } from "./protobuf/utils"
+import { createFieldUUID } from "./utils"
 import {Field,Radio,Number,Text,validator,Checkbox,DropDown,Date,Label,Range} from "./protobuf/Fields_pb"
 
 export class GetAction {
