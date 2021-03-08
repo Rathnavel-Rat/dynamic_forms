@@ -1,5 +1,6 @@
 import {ADD_NEW_FORM, REQUEST_CREATED_FORM, REQUEST_CREATED_FORM_FAILURE, REQUEST_CREATED_FORM_SUCCESS} from "./type";
 import Axios from "../../axiosConfig";
+import {base64ToArrayBuffer} from "../../CreateForms/utils";
 
 export const Req_Created_Form=()=>{
     return{
@@ -58,25 +59,15 @@ export const AddNewFormApiCAll=(data)=>(dispatch)=>{
        })
 }
 
-function base64ToArrayBuffer(base64) { // use while rerender
-    const binary_string = window.atob(base64);
-    const len = binary_string.length;
-    const bytes = new Uint8Array(len);
-    for (let i = 0; i < len; i++) {
-        bytes[i] = binary_string.charCodeAt(i);
-    }
-    console.log(bytes.buffer)
-    return bytes;
-}
+
 export const FetchBinaryDataApiCall=(data)=>(dispatch)=>{
        return new Promise((resolve, reject) => {
         Axios().get("dynamicforms/GetBinaryFormData", {
             params: {
                 form_id: data.form_id,
-
             }
         }).then(e=>{
-                    resolve({"data":e.data.data})
+                    resolve({"data":e.data})
                    }).catch(e => resolve({sucess:false}))
        })
 }

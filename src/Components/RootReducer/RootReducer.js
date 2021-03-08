@@ -6,6 +6,7 @@ import RegisterRequestReducer from "../Redux/Register/reducers";
 import { userDetailReducer } from "../Redux/UserDetails/UserDetails";
 import {DndReducers} from "../Redux/DnDItems/reducers"
 import {CreatedFormReducer} from "../Redux/CreatedForm/reducers";
+import {CurrentFormReducer} from "../Redux/currentForm/currentForm";
 
  const rootReducers =combineReducers({
      register:RegisterRequestReducer,
@@ -14,6 +15,7 @@ import {CreatedFormReducer} from "../Redux/CreatedForm/reducers";
      changepassword:PasswordChangeReducer,
      dnd:DndReducers,
      createdForm:CreatedFormReducer,
+     currentForm:CurrentFormReducer,
 
 
 })

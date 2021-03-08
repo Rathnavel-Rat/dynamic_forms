@@ -1,7 +1,7 @@
 import React from 'react'
 import { DragDropContext} from 'react-beautiful-dnd'
 import { useSelector,useDispatch } from 'react-redux'
-import {  Grid, Segment, } from 'semantic-ui-react'
+import {  Grid, } from 'semantic-ui-react'
 import ItemDrops from './ItemDrops'
 import Toolbox from './Toolbox'
 import {SetDragItem} from '../Redux/DnDItems/action'
@@ -28,6 +28,7 @@ function Home() {
     const  DnD= useSelector(state => state.dnd)
     const dispatch = useDispatch()
     const actions = new GetAction();
+    const selector=useSelector(state=>state.currentForm)
 
     const dragEndCall=(result)=>{
         
@@ -59,6 +60,9 @@ function Home() {
     }
     return (
         <div>
+            <Grid.Row>
+                <h1>{selector.name}</h1>
+            </Grid.Row>
             <DragDropContext onDragEnd={dragEndCall} >
             <Grid celled stackable doubling >
                 <Grid.Row  stretched columns={2}> 

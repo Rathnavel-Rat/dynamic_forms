@@ -11,7 +11,8 @@ import Passwordreset from '../Forgetpassword/PasswordReset/Passwordreset';
 import Home from '../CreateForms/Home';
 import { useSelector } from 'react-redux';
 
-import CreateForm from "../CreateForms/createForm";
+import CreatedForm from "../CreateForms/createdForm";
+import RespondToForm from "../RespondToForm/RespondToForm";
 
 
 
@@ -33,7 +34,8 @@ import CreateForm from "../CreateForms/createForm";
                   </Media>
                   <Switch>
                        <PrivateRoute  component={Home} path="/createForm"/>
-                       <PrivateRoute component={CreateForm} path="/createdForms"/>
+                       <PrivateRoute component={RespondToForm} path='/RespondToForm'/>
+                       <PrivateRoute component={CreatedForm} path="/createdForms"/>
                        <Route  path="/RespondedForm"/>
                        <Route path="/userSettings"/>
                        <PublicRoute restricted={false} path="/ForgotPassword" component={Password}/>

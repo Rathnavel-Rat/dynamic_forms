@@ -32,23 +32,31 @@ export class GetAction {
 
         }
       this.GetText =function (isEmail) {
+          const nField = new Field()
+          nField.setUid(createFieldUUID())
             const nText=new Text()
-            nText.setLabel("Email ")
-            const valid = new validator();
+          const valid = new validator();
             valid.setValidation("true")
             valid.setError("not to be empty")
+
           const valid1 = new validator();
-          valid1.setValidation("^[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,4}$")
+            valid1.setValidation("^[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,4}$")
             valid1.setError("email id required")
             nText.getValidMap().set("required",valid);
-            if(isEmail)
-            nText.getValidMap().set("pattern",valid1)
-            nText.setType("email")
+            if(isEmail) {
+                nText.getValidMap().set("pattern", valid1)
+                nText.setType("email")
+                nText.setLabel("E-mail")
+                nField.setRenderFunc('RenderEmail')
+            }
+            else{
+                nText.setType("Text")
+                nText.setLabel("Enter your Text")
+                nField.setRenderFunc('RenderText')
+            }
 
-            const nField = new Field()
-            nField.setUid(createFieldUUID())
             nField.setText(nText)
-            nField.setRenderFunc('RenderText')
+
             return nField;
 
       }

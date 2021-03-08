@@ -4,7 +4,25 @@ import {useDispatch} from "react-redux";
 import {DragEdit} from "../../Redux/DnDItems/action";
 import {Form, Portal, Container, List, Icon, Button} from "semantic-ui-react";
 
+export const MemoText=memo(({item})=>{
+    const {register,handleSubmit}=useForm();
+    const [PortalOpen,setPortalOpen]=useState(false);
+    const dispatch=useDispatch();
+    const done=(e)=>{
+        item.getText().setLabel(e.label)
+        dispatch(DragEdit())
+        setPortalOpen(false)
 
+    }
+    return(
+        <div>
+            <Form onSubmit={handleSubmit(done)}>
+                <input ref={register({ required: true})} required name="label" placeholder={ "current value:"+item.getText().getLabel()}  />
+                <input type="submit"  value="Save"/>
+                <Portal open={PortalOpen} ><h1>✔</h1> </Portal>
+            </Form>
+        </div>)
+})
 
 export const Memolabel=memo(({item})=>{
     const {register,handleSubmit}=useForm();

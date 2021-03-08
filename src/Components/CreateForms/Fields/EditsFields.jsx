@@ -1,6 +1,7 @@
-import {Memolabel, MemoNumber, MemoRadio,MemoCheckbox,MemoDropDown,MemoDate} from './MemoEditFields'
+import {Memolabel, MemoNumber, MemoRadio,MemoCheckbox,MemoDropDown,MemoDate,MemoText} from './MemoEditFields'
 export class EditRenderField{
     constructor() {
+        this.RenderText=(item)=>{return <MemoText item={item}/>}
         this.RenderLabel = (item)=> {return <Memolabel item={item}/>}
         this.RenderRadio=(item)=> {return <MemoRadio item={item}/>}
         this.RenderNumber=(item)=>{return <MemoNumber item={item}/>}

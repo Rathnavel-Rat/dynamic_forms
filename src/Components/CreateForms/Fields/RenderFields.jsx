@@ -40,9 +40,24 @@ export class RenderProto{
         return(
             <ConnectForm>
                 {({register,control})=>(
-                <Form.Input width={5} label={item.getText().getLabel()}  ref={register({})}   required/>)}
+                   item.getText().getType()!=="email"?
+                       <Form.Input width={5} name={item.getUid()} label={item.getText().getLabel()}  ref={register({})}   />
+                       : <Form.Input width={5} name={item.getUid()} label={item.getText().getLabel()}  ref={register({})}   />
+                )}
             </ConnectForm>
         )
+    }
+    this.RenderEmail=function (item) {
+        {
+            return(
+                <ConnectForm>
+                    {({register,control})=>(
+                             <Form.Input type="email" width={5} name={item.getUid()} label={item.getText().getLabel()}  ref={register({})}   />
+                    )}
+                </ConnectForm>
+            )
+        }
+
     }
     this.RenderCheckBox=function (item) {
         return(

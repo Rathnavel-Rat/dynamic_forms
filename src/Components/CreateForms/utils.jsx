@@ -14,19 +14,20 @@ export function createFieldUUID() {
     return s.join("");
 }
 export function base64ToArrayBuffer(base64) { // use while rerender
-    let bytes=null;
+
     try{
-    const binary_string = window.atob(base64);
-    const len = binary_string.length;
-     bytes = new Uint8Array(len);
+        const binary_string = window.atob(base64);
+        const len = binary_string.length;
+        let bytes = new Uint8Array(len);
     for (let i = 0; i < len; i++) {
         bytes[i] = binary_string.charCodeAt(i);
     }
+    return bytes
     }
     catch (e) {
         return null;
     }
-    return bytes;
+
 }
 export function bufferToBase64(buffer) {
     const binary = String.fromCharCode.apply(null, buffer);

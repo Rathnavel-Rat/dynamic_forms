@@ -1,7 +1,7 @@
-import React,{memo,useReducer} from 'react'
+import React,{memo,useState,useReducer,useEffect} from 'react'
 import { Draggable, Droppable } from 'react-beautiful-dnd'
 import { useDispatch, useSelector } from 'react-redux'
-import { Modal, Segment,Image, Label, Form, Header, } from 'semantic-ui-react'
+import {Modal, Segment, Icon, Label, Form, Header, Container,} from 'semantic-ui-react'
 import {DeleteAnDrags, RemoveAllDrags, SetDragItem} from '../Redux/DnDItems/action'
 import {ListFields} from './protobuf/Fields_pb'
 import { RenderProto } from './Fields/RenderFields'
@@ -14,16 +14,22 @@ import {base64ToArrayBuffer,bufferToBase64} from "./utils";
 
 
 function ItemDrops() {
-  const  DnD= useSelector(state => state.dnd)
-  const dispatch = useDispatch()
-  const onSave=()=>{
-   const nlistFields=new ListFields()
-   nlistFields.setFieldsList(DnD.fields)
-   const serialized=nlistFields.serializeBinary()//save in Database
-      const data={"data":bufferToBase64(serialized)}
-     Axios().post("dynamicforms/saveform",data,).then(e=>{
+     const  DnD= useSelector(state => state.dnd)
+     const dispatch = useDispatch()
+     const currentForm=useSelector(state=>state.currentForm)
+     const[state,dispatches]=useReducer(modalReducer,{isOpen:false})
 
-   }).catch(er=>{console.log(er)})
+    useEffect(()=>{
+        const a= base64ToArrayBuffer(currentForm.bindata)
+        dispatch(SetDragItem(ListFields.deserializeBinary(a).getFieldsList()))
+    },[])
+
+  const onSave=()=>{
+       const nlistFields=new ListFields()
+       nlistFields.setFieldsList(DnD.fields)
+       const serialized=nlistFields.serializeBinary()
+       const data={"data":bufferToBase64(serialized),"form_id":currentForm.id}
+       Axios().post("dynamicforms/saveform",data).then(e=>{dispatches({type:"OPEN"});}).catch(er=>{console.log(er)})
   }
 
     return (
@@ -51,6 +57,7 @@ function ItemDrops() {
            )}
        
          </Droppable>
+            <SavedModal open={state.isOpen} dis={dispatches}/>
       </Segment>
        
     )
@@ -135,3 +142,22 @@ const CustomModal=memo(({item})=>{
 
 })
 
+const SavedModal=memo(({open,dis})=>{
+    return (
+        <Modal
+            basic
+            size={"mini"}
+            closeIcon
+            open={ open}
+            onClose={() => dis({type:"CLOSE"})}>
+            <Modal.Header><Icon  color="green" name="save "/>Saved Successfully</Modal.Header>
+            <Modal.Content >
+                <Container textAlign={"center"}>
+                 <Icon name={"check circle"} size={"huge"} color="green"/>
+             </Container>
+            </Modal.Content>
+        </Modal>
+    )
+
+
+} )

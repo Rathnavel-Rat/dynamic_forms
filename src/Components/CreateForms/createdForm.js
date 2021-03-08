@@ -6,12 +6,12 @@ import Segment from "semantic-ui-react/dist/commonjs/elements/Segment";
 import { useForm,Controller } from "react-hook-form";
 import {modalReducer} from "../ModalReducer/ModalReducer";
 import Axios from "../axiosConfig";
-import {base64ToArrayBuffer} from "./utils";
 import {useHistory} from "react-router-dom";
+import {CurrentForm} from "../Redux/currentForm/currentForm";
 
 
 
-const CreateForm = () => {
+const CreatedForm = () => {
     const dispatch=useDispatch()
     const data=useSelector(state=>state.createdForm)
     const history=useHistory()
@@ -28,8 +28,8 @@ const CreateForm = () => {
                           onClick={()=>{
                                 dispatch(FetchBinaryDataApiCall({"form_id":e.form_id})).
                                 then(e=>{
-                                    console.log(base64ToArrayBuffer(e.binaryData))
-                                    history.push("/createForm","oojo")
+                                    dispatch(CurrentForm(e.data))
+                                    history.push("/createForm")
 
                                 })
                           }}  color="blue" />
@@ -64,7 +64,7 @@ const ListsForms=memo(({item})=>{
         </List.Content>
     )
 })
-export default CreateForm;
+export default CreatedForm;
 
 const CreateFormModal=({dispatch})=>{
     const{register,handleSubmit,control}=useForm()
