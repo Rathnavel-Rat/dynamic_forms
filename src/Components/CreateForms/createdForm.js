@@ -1,13 +1,14 @@
 import React, {memo, useEffect, useReducer, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {AddNewFormApiCAll, FetchCreatedFormAPICall,FetchBinaryDataApiCall} from "../Redux/CreatedForm/actions";
-import {List, Card, Icon, Form, Modal, Button, Input, FormInput} from "semantic-ui-react";
+import {List, Card, Icon, Form, Modal, Button, FormInput} from "semantic-ui-react";
 import Segment from "semantic-ui-react/dist/commonjs/elements/Segment";
 import { useForm,Controller } from "react-hook-form";
 import {modalReducer} from "../ModalReducer/ModalReducer";
 import Axios from "../axiosConfig";
 import {useHistory} from "react-router-dom";
 import {CurrentForm} from "../Redux/currentForm/currentForm";
+import {DeleteFormApiCall} from "../Redux/DeleteForm/action";
 
 
 
@@ -15,8 +16,7 @@ const CreatedForm = () => {
     const dispatch=useDispatch()
     const data=useSelector(state=>state.createdForm)
     const history=useHistory()
-    useEffect(()=> dispatch(FetchCreatedFormAPICall())
-    ,[])
+    useEffect(()=> dispatch(FetchCreatedFormAPICall()),[])
 
     return (
         <Segment verticalAlign="top"   fluid text  textAlign="center" >
@@ -33,7 +33,7 @@ const CreatedForm = () => {
 
                                 })
                           }}  color="blue" />
-                    <DeleteFormModal name={e.name}/>
+                    <DeleteFormModal dispatch={dispatch} id={e.form_id} name={e.name}/>
                 </List.Content>
                 <ListsForms item={e}/>
 
@@ -91,16 +91,17 @@ const CreateFormModal=({dispatch})=>{
     )
 }
 
-const DeleteFormModal=({name})=>{
+const DeleteFormModal=({dispatch,id,name})=>{
     const[state,dispatches]=useReducer(modalReducer,{isOpen:false})
+
     return(
         <Modal trigger={<Icon name="delete" onClick={()=>{dispatches({type:"OPEN"})}} />} closeIcon   open={state.isOpen} onClose={()=>{dispatches({type:"CLOSE"})}}>
         <Modal.Header>Are sure you wanna delete</Modal.Header>
-        <Modal.Description center>
+        <Modal.Description textAlign="center">
          <h1> {name}</h1>
         </Modal.Description>
         <Modal.Content>
-            <Button size={5} positive >
+            <Button size={5} positive  onClick={()=>dispatch(DeleteFormApiCall({"id":id})).then()} >
            Confrim Delete
         </Button></Modal.Content>
     </Modal>)

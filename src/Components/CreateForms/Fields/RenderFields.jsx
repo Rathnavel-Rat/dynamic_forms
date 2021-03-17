@@ -1,8 +1,9 @@
-import React,{memo} from 'react'
-import {Checkbox, Form, Label, Radio, Segment} from 'semantic-ui-react';
+import React from 'react'
+import {Checkbox, Form, FormCheckbox, Input, Label, Radio, Segment} from 'semantic-ui-react';
 import FormInput from "semantic-ui-react/dist/commonjs/collections/Form/FormInput";
-import {useFormContext} from "react-hook-form";
 import {ConnectForm} from "./ConnectForm";
+import {Controller} from "react-hook-form";
+
 
 
 export class RenderProto{
@@ -12,25 +13,30 @@ export class RenderProto{
 
     return(
         <ConnectForm>
-            {({ register })=>(
+            {({ register,setValue,trigger,control })=>(
 
-        <Form.Field  >
-          <Label content={item.getRadio().getLabel()} />
-    
-           { 
-           arr.map((e,i)=>(<Form.Input  ref={register({})} type="radio" key={i}  value={e} label={e}  name={item.getUid()}  />))
-           }
-       
-        </Form.Field> )}
-            </ConnectForm>
-      
+                <Form.Field>
+                    <Label content={item.getRadio().getLabel()} />
+                    {
+                        arr.map((e,i)=>(
+                            <div><input  ref={register({})} type="radio" key={i}  value={e}   name={item.getUid()}/>
+                                <label htmlFor={e}>{e}</label>
+                            </div>
+                            ))
+
+                    }
+
+                </Form.Field> )}
+        </ConnectForm>
+
+
     )
     };
     this.RenderNumber=function (item) {
       return(
           <ConnectForm>
               {({register,control})=>(
-          <Form.Input  ref={register({})}  width={5} label={item.getNumber().getLabel()}    name={item.getUid()} type="number" min={item.getNumber().getMin()} max={item.getNumber().getMax()}/>
+          <Controller control={control}  defaultValue="" as={FormInput} ref={register({})}  width={5} label={item.getNumber().getLabel()}    name={item.getUid()} type="number" min={item.getNumber().getMin()} max={item.getNumber().getMax()}/>
               )}
           </ConnectForm>
       )
@@ -40,9 +46,8 @@ export class RenderProto{
         return(
             <ConnectForm>
                 {({register,control})=>(
-                   item.getText().getType()!=="email"?
-                       <Form.Input width={5} name={item.getUid()} label={item.getText().getLabel()}  ref={register({})}   />
-                       : <Form.Input width={5} name={item.getUid()} label={item.getText().getLabel()}  ref={register({})}   />
+                       <Controller control={control}  defaultValue="" as={FormInput} width={5} name={item.getUid()} label={item.getText().getLabel()}  ref={register({})}   />
+
                 )}
             </ConnectForm>
         )
@@ -52,7 +57,7 @@ export class RenderProto{
             return(
                 <ConnectForm>
                     {({register,control})=>(
-                             <Form.Input type="email" width={5} name={item.getUid()} label={item.getText().getLabel()}  ref={register({})}   />
+                        <Controller control={control} as={Form.Input} defaultValue="" type="email" width={5} name={item.getUid()} label={item.getText().getLabel()}  ref={register({})}   />
                     )}
                 </ConnectForm>
             )
@@ -60,10 +65,21 @@ export class RenderProto{
 
     }
     this.RenderCheckBox=function (item) {
+
         return(
           <ConnectForm>
-              {({register})=>(
-        <Form.Checkbox  ref={register({})}  label={item.getCheckbox().getLabel()} name={item.getUid()}/>)}
+              {({register,trigger,setValue})=>(
+                  <Form.Checkbox
+                      name={item.getUid()}
+                      ref={register({name:item.getUid()})}
+                      label="I agree to the Terms and Conditions"
+                      onChange={async (e, { name, checked }) => {
+                          setValue(name, checked);
+                          await trigger({ name });
+                      }}
+                  />
+
+                  )}
           </ConnectForm>
         )
 
@@ -78,8 +94,13 @@ export class RenderProto{
 
         return(
             <ConnectForm>
-                {({register})=>(
-                <Form.Select width={5} ref={register({})}  renderLabel  label={item.getDropdown().getLabel()}  options={arr} name={item.getUid()}/>)}
+                {({register,control,setValue,trigger})=>(
+                <Form.Select defaultValue="" width={5} ref={register({name:item.getUid()})}
+                             onChange={async (e, { name, value }) => {
+                                 setValue(name, value);
+                                 await trigger({ name });
+                             }}
+                             label={item.getDropdown().getLabel()} type="select"  options={arr} name={item.getUid()}/>)}
             </ConnectForm>
         )
 
@@ -88,8 +109,8 @@ export class RenderProto{
 
         return(
             <ConnectForm>
-                {({register})=>(
-                <FormInput  width={5}  ref={register({})}  label={item.getDate().getLabel()} type="Date" name={item.getUid()} />)}
+                {({register,control})=>(
+                <Controller control={control} as={Form.Input} defaultValue=""  width={5}  ref={register({})}  label={item.getDate().getLabel()} type="Date" name={item.getUid()} />)}
             </ConnectForm>
         )
     }
@@ -115,4 +136,6 @@ export class RenderProto{
 
   }
 }
+
+
 

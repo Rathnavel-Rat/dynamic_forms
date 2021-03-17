@@ -23,12 +23,7 @@ export const Req_Created_Form_failure=(data)=>{
     }
 
 }
-export const Add_New_Form=(data)=>{
-    return{
-        type:ADD_NEW_FORM,
-        payload:data
-    }
-}
+
 
 
 export const FetchCreatedFormAPICall=()=>{
@@ -36,8 +31,9 @@ export const FetchCreatedFormAPICall=()=>{
         dispatch(Req_Created_Form());
         Axios()
             .get("dynamicforms/getStoredForms")
-            .then(e=>{dispatch(Req_Created_Form_Success(e.data))})
-            .catch(e=>{ console.log("e",e)
+            .then(e=>{
+                dispatch(Req_Created_Form_Success(e.data))})
+            .catch(e=>{
                 dispatch(Req_Created_Form_failure(e.response.data.data))})
     }
 }
@@ -48,7 +44,6 @@ export const AddNewFormApiCAll=(data)=>(dispatch)=>{
            Axios()
                .post("dynamicforms/addNewForm", data)
                .then(e => {
-                   console.log("hello")
                    dispatch(Req_Created_Form_Success(e.data.data))
                    return  resolve(true)
                })

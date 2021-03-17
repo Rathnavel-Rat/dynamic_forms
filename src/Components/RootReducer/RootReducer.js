@@ -7,6 +7,7 @@ import { userDetailReducer } from "../Redux/UserDetails/UserDetails";
 import {DndReducers} from "../Redux/DnDItems/reducers"
 import {CreatedFormReducer} from "../Redux/CreatedForm/reducers";
 import {CurrentFormReducer} from "../Redux/currentForm/currentForm";
+import {DeleteFormReducer} from "../Redux/DeleteForm/reducer";
 
  const rootReducers =combineReducers({
      register:RegisterRequestReducer,
@@ -16,6 +17,7 @@ import {CurrentFormReducer} from "../Redux/currentForm/currentForm";
      dnd:DndReducers,
      createdForm:CreatedFormReducer,
      currentForm:CurrentFormReducer,
+     deleteForm:DeleteFormReducer,
 
 
 })

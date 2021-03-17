@@ -18,7 +18,6 @@ const initState={
     name:null,
 }
 export const CurrentFormReducer=(state=initState,action)=>{
-    console.log(action.data)
     switch (action.type) {
         case CURRENT_FORM:
             return {
