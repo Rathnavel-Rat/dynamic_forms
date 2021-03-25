@@ -1,7 +1,12 @@
 syntax = "proto3";
 
+message ListPageForm{
+    repeated  ListFields page=1;
+}
+
 message ListFields{
     repeated Field fields=1;
+    string FormId=2;
 }
 message Field{
     string uid=1;
@@ -60,7 +65,11 @@ message Number{
 }
 
 message Image{
-    string ImageUrl=1;
+    string imageLabel=1;
+    string ImageUrl=2;
+    string size=3;
+    bool is_rounded=4;
+    bool is_circular=5;
 }
 message DropDown{
     repeated  string items=1;

@@ -1,9 +1,8 @@
 
-import React,{useEffect, useState} from 'react'
-import { Button,Form, Grid, Header, Label, Message, Segment,Loader } from 'semantic-ui-react'
+import React,{useEffect} from 'react'
+import { Button,Form, Grid, Header, Label, Message, Segment } from 'semantic-ui-react'
 import { useForm,Controller } from "react-hook-form";
 import { useSelector,useDispatch} from 'react-redux';
-import Axios from '../../axiosConfig';
 import { PasswordResetAPI } from '../../Redux/passwordChange/actions';
 
 
@@ -13,8 +12,6 @@ function Passwordreset(props) {
    
     
     const urlParams = new URLSearchParams(window.location.search);
-    const valid_cred = urlParams.get('token_valid','');
-    const message=urlParams.get('message',"")
     const uid64=urlParams.get("uidb64","")
     const token=urlParams.get("token","")
     //http://localhost:3000/passwordReset?token_valid=True&message=CredentialsValid&uidb64=NzhkZTg1YTQtMzBkYy00NTNiLTk4ZGItOGJmZmI5MzJhMTYz&token=agorxd-e8dad31e03a17dbdd0b82efa3f86bb2c

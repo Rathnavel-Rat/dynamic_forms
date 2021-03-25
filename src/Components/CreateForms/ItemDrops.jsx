@@ -1,9 +1,16 @@
-import React,{memo,useState,useReducer,useEffect} from 'react'
+import React,{memo,useReducer,useEffect} from 'react'
 import { Draggable, Droppable } from 'react-beautiful-dnd'
 import { useDispatch, useSelector } from 'react-redux'
 import {Modal, Segment, Icon, Label, Form, Header, Container,} from 'semantic-ui-react'
-import {DeleteAnDrags, RemoveAllDrags, SetDragItem} from '../Redux/DnDItems/action'
-import {ListFields} from './protobuf/Fields_pb'
+import {
+    DeleteAllElementsInAPage,
+    DeleteAnDrags,
+    DeleteAPage,
+    LoadPage,
+    RemoveAllDrags,
+    SetDragItem
+} from '../Redux/DnDItems/action'
+import {ListFields,ListPageForm} from './protobuf/Fields_pb'
 import { RenderProto } from './Fields/RenderFields'
 import {EditRenderField} from "./Fields/EditsFields";
 import { useForm, useFormContext, FormProvider, Controller } from "react-hook-form";
@@ -13,21 +20,33 @@ import {modalReducer} from "../ModalReducer/ModalReducer";
 import {base64ToArrayBuffer,bufferToBase64} from "./utils";
 
 
+
+
+
+
 function ItemDrops() {
      const  DnD= useSelector(state => state.dnd)
      const dispatch = useDispatch()
      const currentForm=useSelector(state=>state.currentForm)
      const[state,dispatches]=useReducer(modalReducer,{isOpen:false})
 
-    useEffect(()=>{
+     useEffect(()=>{
         const a= base64ToArrayBuffer(currentForm.bindata)
-        dispatch(SetDragItem(ListFields.deserializeBinary(a).getFieldsList()))
-    },[])
+         const data = {};
+         ListPageForm.deserializeBinary(a).getPageList().forEach(e=>(
+             data[e.getFormid().toString()]={id:e.getFormid(),page:e}
+         ))
+        dispatch(LoadPage(data))
+     },[])
 
   const onSave=()=>{
-       const nlistFields=new ListFields()
-       nlistFields.setFieldsList(DnD.fields)
-       const serialized=nlistFields.serializeBinary()
+       const nPageListForm = new  ListPageForm()
+       const  array=[]
+       Object.entries(DnD.formPage).map(e=>(
+           array.push(e[1].page)
+       ))
+       nPageListForm.setPageList(array)
+       const serialized=nPageListForm.serializeBinary()
        const data={"data":bufferToBase64(serialized),"form_id":currentForm.id}
        Axios().post("dynamicforms/saveform",data).then(e=>{dispatches({type:"OPEN"});}).catch(er=>{console.log(er)})
   }
@@ -36,37 +55,56 @@ function ItemDrops() {
         <Segment secondary  stacked>
           <Segment>
           <Label size={50} onClick={()=>dispatch(RemoveAllDrags())} color="red" attached="top right" style={{paddingRight:"18px",height:"10Ppx"}} icon="remove"   removeIcon />
-          <Header> Drag Items from toolbar and place here </Header>
+          <Header> Drag Items from toolbar and place it below  </Header>
           <Label size={50} onClick={()=>onSave()} color="green" attached="top left" style={{paddingRight:"18px",height:"10Ppx"}} icon="save"   />
           </Segment>
-          
-        <Droppable  isCombineEnabled={true}  style={{height:"500px"}} droppableId="workingArea" >
-      
-        {(provided,snapshot )=>(
-      
-               <div ref={provided.innerRef} {...provided.droppableProps} isDraggingOver={snapshot.isDraggingOver}  >
-                 <Segment  widths="equal"  style={{height:"max-content",minHeight:"450px", backgroundColor:"#fff"}}>
-                   
-                    <DropList snapshot={snapshot} items={DnD.fields}/>
-                 </Segment>
+            {
+              Object.entries(DnD.formPage).map(e=>(
 
-                {provided.placeholder}
-               </div>
-                    
-              
-           )}
-       
-         </Droppable>
+                 <Segment >
+                     {console.log(DnD.formPage,"kkk0")}
+                  <EachPage item={e[1].page} dispatch={dispatch}/>
+
+                 </Segment>)
+              )
+            }
             <SavedModal open={state.isOpen} dis={dispatches}/>
       </Segment>
        
     )
 }
 
+
 export default ItemDrops
 
 
- function  DropList({snapshot,items}) {
+const EachPage=({item,dispatch})=>{
+  console.log(item,"kkk")
+    return(
+        <Droppable  isCombineEnabled={true}  style={{height:"500px"}} droppableId={item.getFormid()} >
+
+            {(provided,snapshot )=>(
+
+                <div ref={provided.innerRef} {...provided.droppableProps} isDraggingOver={snapshot.isDraggingOver}  >
+                    <Segment  widths="equal"  style={{height:"max-content",minHeight:"450px", backgroundColor:"#fff"}}>
+                        <Label size={50} onClick={()=>{dispatch(DeleteAllElementsInAPage({id:item.getFormid()}))}} color="red" attached="top right" style={{paddingRight:"18px",height:"10Ppx"}} icon="remove"   removeIcon />
+
+
+                        <DropList snapshot={snapshot} formId={item.getFormid()} items={item.getFieldsList()}/>
+                        <Label size={50} onClick={()=>{dispatch(DeleteAPage({id:item.getFormid()}))}} color="red" attached="bottom right" style={{paddingRight:"18px",height:"10Ppx"}} icon="trash"   removeIcon />
+                    </Segment>
+
+                    {provided.placeholder}
+                </div>
+
+
+            )}
+
+        </Droppable>
+    )
+}
+
+function  DropList({snapshot,items,formId}) {
      const methods = useForm();
   return(
       <FormProvider {...methods} >
@@ -82,7 +120,7 @@ export default ItemDrops
                             {...provided.draggableProps} isDragging={snapshot.isDraggingOver}
                             isDragging={snapshot.isDraggingOver}   style={provided.draggableProps.style}  >
                               
-                                 <EachItem item={item} provided={provided}/>
+                                 <EachItem formId={formId} item={item} provided={provided}/>
                              
                          </div>
                       
@@ -97,7 +135,7 @@ export default ItemDrops
           )}
 
 
-const  EachItem=({item,provided}) =>{
+const  EachItem=({item,provided,formId}) =>{
 
     const nRenderProto = new RenderProto();
     const field = nRenderProto[String(item.getRenderFunc())](item);
@@ -109,7 +147,7 @@ const  EachItem=({item,provided}) =>{
                             
                                  <Label color="orange" attached="top left" ribbon style={{width:"min-content"}} icon="align justify" {...provided.dragHandleProps} />
                                 
-                                 <Label  attached="bottom right" onClick={()=>{dispatch(DeleteAnDrags(item.getUid()))}} color="red" style={{width:"min-content"}} icon="trash alternate"  />  <br></br>
+                                 <Label  attached="bottom right" onClick={()=>{dispatch(DeleteAnDrags({formId:formId,elementId:item.getUid()}))}} color="red" style={{width:"min-content"}} icon="trash alternate"  />  <br></br>
                                    <CustomModal item={item}/>
                                    {field}
                                  

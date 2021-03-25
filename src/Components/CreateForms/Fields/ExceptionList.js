@@ -1,1 +1,1 @@
-export const ExceptionList=["RenderRange","RenderImage","RenderEmail"]
+export const ExceptionList=["RenderRange","RenderEmail"]

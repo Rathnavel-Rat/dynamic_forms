@@ -1,5 +1,5 @@
 import React from 'react'
-import {Checkbox, Form, FormCheckbox, Input, Label, Radio, Segment} from 'semantic-ui-react';
+import {Checkbox, Form, FormCheckbox, Image, Label, Radio, Segment} from 'semantic-ui-react';
 import FormInput from "semantic-ui-react/dist/commonjs/collections/Form/FormInput";
 import {ConnectForm} from "./ConnectForm";
 import {Controller} from "react-hook-form";
@@ -128,6 +128,14 @@ export class RenderProto{
             <div>
                  <Label content={item.getRange().getLabel()}/>
                  <input name={item.getUid()} min={item.getRange().getFrom()} max={item.getRange().getTo()} multiple={item.getRange().getMultiples()} />
+            </div>
+        )
+    }
+    this.RenderImage=function(item){
+        return(
+            <div>
+                <Label content={item.getImage().getImagelabel()}/>
+                <Image size={item.getImage().getSize()} src={item.getImage().getImageurl()} rounded={item.getImage().setIsRounded()} circular={item.getImage().setIsCircular()}/>
             </div>
         )
     }

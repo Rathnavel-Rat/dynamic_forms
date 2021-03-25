@@ -2,7 +2,7 @@ import React, {memo, useReducer, useState} from 'react'
 import {useForm} from "react-hook-form";
 import {useDispatch} from "react-redux";
 import {DragEdit} from "../../Redux/DnDItems/action";
-import {Form, Portal, Container, List, Icon, Button} from "semantic-ui-react";
+import {Form, Portal, Container, List, Icon, Image} from "semantic-ui-react";
 
 export const MemoText=memo(({item})=>{
     const {register,handleSubmit}=useForm();
@@ -185,6 +185,41 @@ export  const MemoDate=({item})=>{
         <div>
             <Form onSubmit={handleSubmit(Save)}>
                 <input type="text" defaultValue={Date.getLabel()} placeholder={"current value:"+Date.getLabel().toString()}  name="date" ref={register({required:true})}/>
+                <input type="submit"/>
+            </Form>
+        </div>
+    )
+}
+
+
+export const MemoImage=({item})=>{
+    const {register,handleSubmit}=useForm();
+    const dispatch=useDispatch();
+    const nImage=item.getImage();
+    const Save=(e)=>{
+        item.getImage().setImagelabel(e.label);
+        item.getImage().setSize(e.size);
+        item.getImage().setIsRounded(e.rounded)
+        item.getImage().setIsCircular(e.circular)
+        dispatch(DragEdit())
+    }
+    return(
+        <div>
+            <Form onSubmit={handleSubmit(Save)}>
+                <input type="text" defaultValue={nImage.getImagelabel()} placeholder={"current value:"+nImage.getImagelabel().toString()}  name="label" ref={register({required:true})}/>
+                <select name="size" ref={register({})}>
+                    <option>small </option>
+                    <option>mini </option>
+                    <option>tiny </option>
+                    <option>medium </option>
+                    <option>large </option>
+                    <option>big </option>
+                    <option>huge </option>
+                    <option>massive </option>
+                </select>
+                <input type="checkbox" ref={register({})} name="rounded"  defaultChecked={nImage.getIsRounded()}  />Rounded<br/>
+                <input type="checkbox" ref={register({})} name="circular" defaultChecked={nImage.getIsCircular()}   />Circular
+                <Image size={nImage.getSize()} src={nImage.getImageurl()} alt={nImage.getImagelabel()}/>
                 <input type="submit"/>
             </Form>
         </div>

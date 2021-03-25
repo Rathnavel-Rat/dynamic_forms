@@ -24,8 +24,8 @@ export const DeleteRequestFaliure=(data)=>{
 export const DeleteFormApiCall=(data)=>(dispatch)=>{
     return new Promise((resolve,reject)=> {
         dispatch(DeleteRquest())
-        Axios().
-        delete("dynamicforms/DeleteForm",{
+        Axios()
+            .delete("dynamicforms/DeleteForm",{
             params:{
                 form_id:data.id
             }
@@ -34,6 +34,7 @@ export const DeleteFormApiCall=(data)=>(dispatch)=>{
               dispatch(FetchCreatedFormAPICall())
             return resolve(true)
         } ).catch(request=>{
+            console.log(request.data)
             dispatch(DeleteRequestFaliure(request.data.data))
             return reject(false)
         })

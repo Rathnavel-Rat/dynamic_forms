@@ -1,6 +1,6 @@
-import {ADD_NEW_FORM, REQUEST_CREATED_FORM, REQUEST_CREATED_FORM_FAILURE, REQUEST_CREATED_FORM_SUCCESS} from "./type";
+import { REQUEST_CREATED_FORM, REQUEST_CREATED_FORM_FAILURE, REQUEST_CREATED_FORM_SUCCESS} from "./type";
 import Axios from "../../axiosConfig";
-import {base64ToArrayBuffer} from "../../CreateForms/utils";
+
 
 export const Req_Created_Form=()=>{
     return{

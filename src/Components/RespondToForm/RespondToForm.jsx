@@ -1,6 +1,6 @@
 import React,{useState} from 'react';
-import {Button, Container,Form, Grid, GridColumn} from 'semantic-ui-react'
-import {useForm, Control, Controller, FormProvider} from "react-hook-form";
+import {Container, Form, Grid, List, Segment} from 'semantic-ui-react'
+import {useForm,Controller, FormProvider} from "react-hook-form";
 import Axios from "../axiosConfig";
 import {base64ToArrayBuffer} from "../CreateForms/utils";
 import {ListFields} from "../CreateForms/protobuf/Fields_pb";
@@ -31,7 +31,10 @@ const RespondToForm = () => {
                 <Grid.Column>
                     <Container textAlign={"center"}>
                 <Form onSubmit={handleSubmit(Search)}>
-                <Controller as={Form.Input} control={control}  width={5}  ref={register({required:{value:true,message:"Please enter a valid id"}})}   name="key" type="text" placeholder="enter the form access-id" />
+                <Controller as={Form.Input} control={control}
+                            width={5}  ref={register({required:{value:true,message:"Please enter a valid id"}})}
+                            name="key"
+                            type="text" placeholder="enter the form access-id" />
                     {errors["key"] && errors["key"].message}
                 <Form.Button  type={"submit"}  >Get</Form.Button>
                  </Form></Container>
@@ -66,6 +69,7 @@ const FromFrame=({data})=>{
         console.log(e,"kkk")
     }
     return(
+        <List>
         <FormProvider {...methods} >
             <Form onSubmit={methods.handleSubmit(submit)} width={"equal"}>
                 {data.map((e,i)=>(
@@ -74,6 +78,7 @@ const FromFrame=({data})=>{
                 <Form.Button content="submit" primary  />
             </Form>
         </FormProvider>
+        </List>
     )
 }
 
@@ -81,9 +86,9 @@ const RenderEachItem=({item})=>{
     const nRenderProto = new RenderProto();
     const field = nRenderProto[String(item.getRenderFunc())](item);
     return(
-        <div>
+        <List.Item as={Segment} textAlign="left">
             {field}
-        </div>
+        </List.Item>
 
     )
 }

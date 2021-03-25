@@ -1,6 +1,6 @@
 import React,{ useState} from 'react'
 import { useSelector,useDispatch } from 'react-redux'
-import { NavLink, Link,withRouter, useHistory} from 'react-router-dom'
+import { NavLink, Link,withRouter} from 'react-router-dom'
 import { Menu,Dropdown, Button, } from 'semantic-ui-react'
 import {LogoutApiCall} from "../Redux/UserDetails/UserDetails";
 

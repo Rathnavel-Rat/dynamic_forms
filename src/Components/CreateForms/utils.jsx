@@ -29,6 +29,12 @@ export function base64ToArrayBuffer(base64) { // use while rerender
     }
 
 }
+export  function uuidv4() {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+        return v.toString(16);
+    });
+}
 export function bufferToBase64(buffer) {
     const binary = String.fromCharCode.apply(null, buffer);
     return window.btoa(binary);

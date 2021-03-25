@@ -26,8 +26,8 @@ const CreatedForm = () => {
                 <List.Content floated="right" >
                     <Icon  name="edit"
                           onClick={()=>{
-                                dispatch(FetchBinaryDataApiCall({"form_id":e.form_id})).
-                                then(e=>{
+                                dispatch(FetchBinaryDataApiCall({"form_id":e.form_id}))
+                                    .then(e=>{
                                     dispatch(CurrentForm(e.data))
                                     history.push("/createForm")
 

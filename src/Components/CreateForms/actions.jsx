@@ -1,5 +1,5 @@
 import { createFieldUUID } from "./utils"
-import {Field,Radio,Number,Text,validator,Checkbox,DropDown,Date,Label,Range} from "./protobuf/Fields_pb"
+import {Field,Radio,Number,Text,validator,Checkbox,DropDown,Date,Label,Range,Image} from "./protobuf/Fields_pb"
 
 export class GetAction {
     constructor() {
@@ -113,6 +113,21 @@ export class GetAction {
         nField.setRenderFunc('RenderRange')
     
         return nField;
+      }
+      this.GetImage=function () {
+            const nImage=new Image()
+            nImage.setImagelabel("Enter Your Image Description");
+            nImage.setImageurl("https://react.semantic-ui.com/images/wireframe/image.png")
+            nImage.setSize("small")
+            nImage.setIsRounded(false)
+            nImage.setIsCircular(false)
+            const nField = new Field()
+            nField.setUid(createFieldUUID())
+            nField.setImage(nImage)
+            nField.setRenderFunc('RenderImage')
+          return nField;
+
+
       }
 
     }

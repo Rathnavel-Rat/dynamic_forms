@@ -1,5 +1,5 @@
 import Axios from "../../axiosConfig";
-import { PASSWORD_REQUEST, PASSWORD_REQ_FAILURE, PASSWORD_REQ_SUCCESS, PASSWORD_RESET_FAILURE, PASSWORD_RESET_REQUEST, PASSWORD_RESET_SUCCESS } from "./types"
+import { PASSWORD_REQUEST, PASSWORD_REQ_FAILURE, PASSWORD_REQ_SUCCESS, PASSWORD_RESET_REQUEST, PASSWORD_RESET_SUCCESS } from "./types"
 
 
 const passwordChangeRequest=()=>{
@@ -35,12 +35,12 @@ const passwordResetSuccess=(data)=>{
     }
 }
 
-const passwordResetFailure=(error)=>{
+/*const passwordResetFailure=(error)=>{
     return{
         type:PASSWORD_RESET_FAILURE,
         payload:error
     }
-}
+}*/
 
 export const PasswordRequestAPI=(data)=>{
     return (dispatch)=>{
