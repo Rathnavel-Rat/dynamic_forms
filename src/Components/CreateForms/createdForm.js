@@ -1,7 +1,7 @@
 import React, {memo, useEffect, useReducer, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {AddNewFormApiCAll, FetchCreatedFormAPICall,FetchBinaryDataApiCall} from "../Redux/CreatedForm/actions";
-import {List, Card, Icon, Form, Modal, Button, FormInput} from "semantic-ui-react";
+import {List, Grid, Icon, Card, Form, Modal, Button, FormInput, Container} from "semantic-ui-react";
 import Segment from "semantic-ui-react/dist/commonjs/elements/Segment";
 import { useForm,Controller } from "react-hook-form";
 import {modalReducer} from "../ModalReducer/ModalReducer";
@@ -9,6 +9,7 @@ import Axios from "../axiosConfig";
 import {useHistory} from "react-router-dom";
 import {CurrentForm} from "../Redux/currentForm/currentForm";
 import {DeleteFormApiCall} from "../Redux/DeleteForm/action";
+import {GetFormResponsesApiCall} from "../Redux/GetFormReponses/reducers";
 
 
 
@@ -19,10 +20,12 @@ const CreatedForm = () => {
     useEffect(()=> dispatch(FetchCreatedFormAPICall()),[])
 
     return (
-        <Segment verticalAlign="top"   fluid text  textAlign="center" >
-            <List animated  >
+        <Grid textAlign='center' verticalAlign='middle' >
+            <Grid.Column as={Segment} raised piled inverted style={{maxWidth:"550px",color:"white"}}>
+        <Segment vertical teritary   fluid text  textAlign="center" >
+            <List animated   >
             {data.data.map(e=>(
-                <List.Item as={Card} >
+                <List.Item as={Container}  >
                 <List.Content floated="right" >
                     <Icon  name="edit"
                           onClick={()=>{
@@ -33,18 +36,23 @@ const CreatedForm = () => {
 
                                 })
                           }}  color="blue" />
+                      <Button content="Click To See Responses" icon="eye" onClick={()=>{
+                           dispatch(GetFormResponsesApiCall({"form_id":e.form_id})).then().catch()
+                          history.push("/ViewFormResponses")}}/>
                     <DeleteFormModal dispatch={dispatch} id={e.form_id} name={e.name}/>
                 </List.Content>
-                <ListsForms item={e}/>
+                <EditNameForms item={e}/>
 
             </List.Item>))}
 
             </List>
             <CreateFormModal dispatch={dispatch}/>
         </Segment>
+        </Grid.Column>
+        </Grid>
     );
 };
-const ListsForms=memo(({item})=>{
+const EditNameForms=memo(({item})=>{
 
     const [isIconEdit,setisIconEdit]=useState(false)
     const UpdateFormName=(data)=>{
@@ -52,7 +60,7 @@ const ListsForms=memo(({item})=>{
         Axios().patch("dynamicforms/updateName",data).then(e=>console.log(e)).catch(e=>console.log("lool",e))
     }
     return(
-        <List.Content  floated="left"><Icon color="blue" name="dot circle"/>
+        <List.Content style={{color:"white"}} floated="left"><Icon color="blue" name="dot circle"/>
         {!isIconEdit? item.name:
             <div>
                 <input id="newName" style={{width:"100px",height:"q20px"}} type="text"  placeholder={item.name} defaultValue={item.name}/>
@@ -95,7 +103,7 @@ const DeleteFormModal=({dispatch,id,name})=>{
     const[state,dispatches]=useReducer(modalReducer,{isOpen:false})
 
     return(
-        <Modal trigger={<Icon name="delete" onClick={()=>{dispatches({type:"OPEN"})}} />} closeIcon   open={state.isOpen} onClose={()=>{dispatches({type:"CLOSE"})}}>
+        <Modal trigger={<Icon color="blue" name="delete" onClick={()=>{dispatches({type:"OPEN"})}} />} closeIcon   open={state.isOpen} onClose={()=>{dispatches({type:"CLOSE"})}}>
         <Modal.Header>Are sure you wanna delete</Modal.Header>
         <Modal.Description textAlign="center">
          <h1> {name}</h1>

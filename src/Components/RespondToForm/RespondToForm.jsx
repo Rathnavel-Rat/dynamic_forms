@@ -5,12 +5,17 @@ import Axios from "../axiosConfig";
 import {base64ToArrayBuffer} from "../CreateForms/utils";
 import {ListPageForm} from "../CreateForms/protobuf/Fields_pb";
 import {RenderProto} from "../CreateForms/Fields/RenderFields";
+import {useDispatch, useSelector} from "react-redux";
+import {SetFormAccessId} from "../Redux/RespondToForm/actions";
 
 
 const RespondToForm = () => {
     const [PageForm,setPageForm]=useState([])
     const {register,handleSubmit,errors,control}= useForm()
+    const state=useSelector(state=>state.respondToForm)
+    const dispatch=useDispatch()
     const Search=(e)=>{
+        dispatch(SetFormAccessId({access_id:e.key}))
         Axios().get("dynamicforms/AccessForm", {
             params: {
                 access_id: e.key,
@@ -41,7 +46,7 @@ const RespondToForm = () => {
             </Grid>
             <Grid textAlign="center" verticalAlign="middle" >
                 <Grid.Column style={{ maxWidth: "900px" }} text>
-               <FormDisplay data={PageForm}/>
+                    {state.access_id!==null ? <FormDisplay  data={PageForm}/>:null}
                 </Grid.Column>
             </Grid>
         </div>
@@ -50,10 +55,17 @@ const RespondToForm = () => {
 
 export default RespondToForm;
 
-const FormDisplay=({data})=>{
+const FormDisplay=({data,key})=>{
     const methods=useForm()
-    const submit=(e)=>{
-        console.log(e,"kkk")
+    const state=useSelector(state=>state.respondToForm)
+    const submit=(data)=>{
+        const _data={"access_id":state.access_id,"Responses":data}
+        console.log(_data,"kkk")
+        Axios().post("dynamicforms/SubmitResponse",_data).then(e=>{
+            console.log(e)
+        }).catch(e=>{
+            console.log(e)
+        })
     }
     return(
 

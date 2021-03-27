@@ -41,10 +41,8 @@ export const userDetailReducer=(state=initState,action)=>{
 
 export const LogoutApiCall=()=>{
     return (dispatch)=>{
-        console.log("Sdas")
         Axios().post("authentication/logout").then(
             response=>{
-                console.log(response)
                 dispatch(logout())
             }
           ).catch(err=>{

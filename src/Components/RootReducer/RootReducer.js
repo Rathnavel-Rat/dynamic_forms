@@ -8,6 +8,8 @@ import {DndReducers} from "../Redux/DnDItems/reducers"
 import {CreatedFormReducer} from "../Redux/CreatedForm/reducers";
 import {CurrentFormReducer} from "../Redux/currentForm/currentForm";
 import {DeleteFormReducer} from "../Redux/DeleteForm/reducer";
+import {RespondToFormReducer} from "../Redux/RespondToForm/reducers";
+import {FromResponseReducers} from "../Redux/GetFormReponses/reducers";
 
  const rootReducers =combineReducers({
      register:RegisterRequestReducer,
@@ -18,6 +20,8 @@ import {DeleteFormReducer} from "../Redux/DeleteForm/reducer";
      createdForm:CreatedFormReducer,
      currentForm:CurrentFormReducer,
      deleteForm:DeleteFormReducer,
+     respondToForm:RespondToFormReducer,
+     getFromResponses:FromResponseReducers,
 
 
 })

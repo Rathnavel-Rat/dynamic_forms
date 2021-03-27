@@ -4,6 +4,7 @@ import './App.css';
 import TopBar from './Components/menuComponent/TopBar';
 import {store,persistor} from './store';
 import {PersistGate} from 'redux-persist/integration/react'
+import React from "react";
 
 function App() {
   return (
