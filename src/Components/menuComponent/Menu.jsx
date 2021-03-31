@@ -20,14 +20,15 @@ function MenuComponent(props) {
 
     return (
        
-        <Menu secondary pointing>
+        <Menu style={{backgroundColor:"#f1f8ff"}} color="blue" secondary pointing>
           
     
         <Menu.Item as={NavLink} to='/Home'  name='home' active={activeTab === 'home'} onClick={()=>onclickTab('home')}/>
         {userdata.islogin ?(
           <Menu.Menu>
          <Menu.Item as={NavLink} to="/createdForms" name='createdforms' active={activeTab === 'createdforms'} onClick={()=>onclickTab('createdforms')} />
-         <Menu.Item as={NavLink} to="/respondedForm" name="respondedForm" active={activeTab=== 'respondedForm'} onClick={()=>onclickTab('respondedForm')} /></Menu.Menu>
+              <Menu.Item as={NavLink} to="/RespondToForm" name='RespondToForm' active={activeTab === 'RespondToForm'} onClick={()=>onclickTab('RespondToForm')} />
+         </Menu.Menu>
         ):null
         }
         { userdata.islogin  ? 

@@ -7,6 +7,7 @@ message ListPageForm{
 message ListFields{
     repeated Field fields=1;
     string FormId=2;
+
 }
 message Field{
     string uid=1;
@@ -21,7 +22,10 @@ message Field{
         Number number=8;
         Image image=9;
         DropDown dropdown=10;
+        TextArea textarea=11;
+        FileUpload fileupload=12;
     }
+    bool is_required=14;
     
 }
 message  Label{
@@ -75,4 +79,12 @@ message DropDown{
     repeated  string items=1;
     string label=2;
 
+}
+message TextArea{
+    string label=1;
+}
+
+message FileUpload{
+    string label=1;
+    string path=2;
 }

@@ -59,6 +59,18 @@ export const  items=[
        name:"dropdown",
        icon:"drop",
        action:"GetDrop",
+    },{
+        id:"textArea",
+        name:"textArea",
+        icon:"text",
+        action: "GetTextArea"
+    },
+    {
+        id:"fileUpload",
+        name:"fileUpload",
+        icon:"file",
+        action:"GetFileUpload"
     }
+
 
 ]

@@ -1,5 +1,5 @@
-import React,{useState} from 'react';
-import {Container, Divider, Form, Grid, List, Segment} from 'semantic-ui-react'
+import React, { memo,useReducer, useState} from 'react';
+import {Button, Container, Divider, Form, FormInput, Grid, List, Modal, Segment} from 'semantic-ui-react'
 import {useForm,Controller, FormProvider} from "react-hook-form";
 import Axios from "../axiosConfig";
 import {base64ToArrayBuffer} from "../CreateForms/utils";
@@ -7,6 +7,7 @@ import {ListPageForm} from "../CreateForms/protobuf/Fields_pb";
 import {RenderProto} from "../CreateForms/Fields/RenderFields";
 import {useDispatch, useSelector} from "react-redux";
 import {SetFormAccessId} from "../Redux/RespondToForm/actions";
+import {modalReducer} from "../ModalReducer/ModalReducer";
 
 
 const RespondToForm = () => {
@@ -55,27 +56,68 @@ const RespondToForm = () => {
 
 export default RespondToForm;
 
-const FormDisplay=({data,key})=>{
+const FormDisplay=({data})=>{
     const methods=useForm()
     const state=useSelector(state=>state.respondToForm)
-    const submit=(data)=>{
-        const _data={"access_id":state.access_id,"Responses":data}
-        console.log(_data,"kkk")
-        Axios().post("dynamicforms/SubmitResponse",_data).then(e=>{
-            console.log(e)
-        }).catch(e=>{
-            console.log(e)
-        })
+    const[states,dispatches]=useReducer(modalReducer,{isOpen:false})
+    const[msg,setMsg]=useState("")
+    const submit=(data)=> {
+        const _data = {"access_id": state.access_id, "Responses": data}
+
+        const list = Object.keys(data).filter(e => e.toString().includes('file'))
+        if (list.length !== 0) {
+            const formdata = new FormData();
+
+            list.forEach(e => {
+                formdata.append(e.toString(), data[e][0])
+            })
+            formdata.append("access_id", state.access_id)
+
+            Axios().post("dynamicforms/saveFile", formdata, {
+                    'Content-Type': 'multipart/form-data',
+                }
+            ).then(e => {
+                    const data = e.data["filepath"]
+                    list.forEach(d => {
+                        _data.Responses[d] = data[d]
+                    })
+
+                    Axios().post("dynamicforms/SubmitResponse", _data).then(e => {
+                        setMsg("submitted successFully")
+                        dispatches({type: "OPEN"})
+                    }).catch(e => {
+                        setMsg(e.response.data['non_field_errors'])
+                        dispatches({type: "OPEN"})
+                    })
+                }
+            ).catch(e => {
+
+                    setMsg(e.response.data['non_field_errors'])
+                    dispatches({type: "OPEN"})
+                }
+            )
+
+
+        }
+        else {
+            Axios().post("dynamicforms/SubmitResponse",_data).then(e=>{
+                setMsg("submitted successFully")
+                dispatches({type:"OPEN"})
+            }).catch(e=>{
+                setMsg(e.response.data['non_field_errors'])
+                dispatches({type:"OPEN"})
+            })
+        }
     }
     return(
-
         <FormProvider {...methods} >
-                    <Form onSubmit={methods.handleSubmit(submit)} width={"equal"}>
+                    <Form  onSubmit={methods.handleSubmit(submit)} width={"equal"}>
                         {data.map((e,i)=>(
                             <FromFrame  data={e.getFieldsList()}/>
                         ))}
                         <Form.Button content="submit" primary  />
                     </Form>
+            <ErrorModal isOpen={states.isOpen} msg={msg} dispatches={dispatches} />
         </FormProvider>
     )
 }
@@ -103,3 +145,21 @@ const RenderEachItem=({item})=>{
 
     )
 }
+
+const ErrorModal=memo(({isOpen,msg,dispatches})=>{
+    console.log(isOpen)
+    return(
+        <Modal size={"tiny"}   closeIcon  open={isOpen} onClose={()=>{dispatches({type:"CLOSE"})}}>
+            <Modal.Content >
+                {msg}
+            </Modal.Content>
+            <Modal.Actions >
+                <Button positive onClick={() => dispatches({ type: 'CLOSE' })}>
+                    ok
+                </Button>
+            </Modal.Actions>
+        </Modal>
+
+    )
+})
+

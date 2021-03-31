@@ -1,7 +1,18 @@
-import React, {memo, useEffect, useReducer, useState} from 'react';
+import React, {Component, memo, useEffect, useReducer, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {AddNewFormApiCAll, FetchCreatedFormAPICall,FetchBinaryDataApiCall} from "../Redux/CreatedForm/actions";
-import {List, Grid, Icon, Card, Form, Modal, Button, FormInput, Container} from "semantic-ui-react";
+import {
+    List,
+    Grid,
+    Icon,
+    TransitionablePortal,
+    Form,
+    Modal,
+    Button,
+    FormInput,
+    Container,
+    Portal
+} from "semantic-ui-react";
 import Segment from "semantic-ui-react/dist/commonjs/elements/Segment";
 import { useForm,Controller } from "react-hook-form";
 import {modalReducer} from "../ModalReducer/ModalReducer";
@@ -13,16 +24,18 @@ import {GetFormResponsesApiCall} from "../Redux/GetFormReponses/reducers";
 
 
 
+
 const CreatedForm = () => {
     const dispatch=useDispatch()
     const data=useSelector(state=>state.createdForm)
     const history=useHistory()
     useEffect(()=> dispatch(FetchCreatedFormAPICall()),[])
 
+
     return (
         <Grid textAlign='center' verticalAlign='middle' >
-            <Grid.Column as={Segment} raised piled inverted style={{maxWidth:"550px",color:"white"}}>
-        <Segment vertical teritary   fluid text  textAlign="center" >
+            <Grid.Column as={Segment} raised  style={{maxWidth:"550px",marginTop:70}}>
+        <Segment    fluid text  textAlign="center" >
             <List animated   >
             {data.data.map(e=>(
                 <List.Item as={Container}  >
@@ -36,6 +49,7 @@ const CreatedForm = () => {
 
                                 })
                           }}  color="blue" />
+                      <Copy access_id={e.access_id}/>
                       <Button content="Click To See Responses" icon="eye" onClick={()=>{
                            dispatch(GetFormResponsesApiCall({"form_id":e.form_id})).then().catch()
                           history.push("/ViewFormResponses")}}/>
@@ -60,7 +74,7 @@ const EditNameForms=memo(({item})=>{
         Axios().patch("dynamicforms/updateName",data).then(e=>console.log(e)).catch(e=>console.log("lool",e))
     }
     return(
-        <List.Content style={{color:"white"}} floated="left"><Icon color="blue" name="dot circle"/>
+        <List.Content  floated="left"><Icon color="blue" name="dot circle"/>
         {!isIconEdit? item.name:
             <div>
                 <input id="newName" style={{width:"100px",height:"q20px"}} type="text"  placeholder={item.name} defaultValue={item.name}/>
@@ -109,8 +123,34 @@ const DeleteFormModal=({dispatch,id,name})=>{
          <h1> {name}</h1>
         </Modal.Description>
         <Modal.Content>
-            <Button size={5} positive  onClick={()=>dispatch(DeleteFormApiCall({"id":id})).then()} >
+            <Button size={5} positive  onClick={()=>dispatch(DeleteFormApiCall({"id":id})).then(_=>{dispatches({type:"CLOSE"})} )} >
            Confrim Delete
         </Button></Modal.Content>
     </Modal>)
+}
+
+
+
+const  Copy= ({access_id}) =>{
+    function copyToClipboard(id){
+        let copy = document.createElement("input");
+        document.body.appendChild(copy);
+        copy.setAttribute('value', id);
+        copy.select();
+        document.execCommand("copy");
+        document.body.removeChild(copy);
+    }
+    const[state,dispatches]=useReducer(modalReducer,{isOpen:false})
+
+        return (
+
+                <TransitionablePortal
+                    trigger={<Icon color="blue" name="clipboard" onClick={()=>{dispatches({type:"OPEN"});copyToClipboard(access_id)}} />}
+                    onClose={()=>dispatches({type:"CLOSE"})}  open={state.isOpen}>
+                    <Segment style={{ left: '40%', position: 'fixed', top: '50%', zIndex: 1000 }}>
+                        Form Access Id Copied to Clipboard
+                    </Segment>
+                </TransitionablePortal>
+        )
+
 }

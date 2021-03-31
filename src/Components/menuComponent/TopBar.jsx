@@ -14,6 +14,7 @@ import { useSelector } from 'react-redux';
 import CreatedForm from "../CreateForms/createdForm";
 import RespondToForm from "../RespondToForm/RespondToForm";
 import ViewFormResponses from "../FromResponses/FormResponses";
+import CreativeFormHome from "../Home/Home";
 
 
 
@@ -40,6 +41,7 @@ import ViewFormResponses from "../FromResponses/FormResponses";
                        <PrivateRoute component={ViewFormResponses} path="/ViewFormResponses"/>
                        <Route  path="/RespondedForm"/>
                        <Route path="/userSettings"/>
+                       <PublicRoute restricted={false} path="/Home" component={CreativeFormHome} />
                        <PublicRoute restricted={false} path="/ForgotPassword" component={Password}/>
                        <PublicRoute restricted={true} path="/Login" component={Login} exact/>
                        <PublicRoute restricted={true} path="/Register" component={Register} exact/> 

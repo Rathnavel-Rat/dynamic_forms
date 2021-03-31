@@ -1,5 +1,5 @@
 import { createFieldUUID } from "./utils"
-import {Field,Radio,Number,Text,validator,Checkbox,DropDown,Date,Label,Range,Image} from "./protobuf/Fields_pb"
+import {Field,Radio,Number,Text,validator,Checkbox,DropDown,Date,Label,Range,Image,TextArea,FileUpload} from "./protobuf/Fields_pb"
 
 export class GetAction {
     constructor() {
@@ -15,6 +15,7 @@ export class GetAction {
             const nField = new Field()
             nField.setUid(createFieldUUID())
             nField.setRadio(nRadio)
+            nField.setIsRequired(false)
             nField.setRenderFunc('RenderRadio')
             return nField;
         }
@@ -27,6 +28,7 @@ export class GetAction {
             const nField = new Field()
             nField.setUid(createFieldUUID())
             nField.setNumber(nNumber)
+            nField.setIsRequired(false)
             nField.setRenderFunc('RenderNumber')
             return nField;
 
@@ -56,6 +58,7 @@ export class GetAction {
             }
 
             nField.setText(nText)
+            nField.setIsRequired(false)
 
             return nField;
 
@@ -67,6 +70,7 @@ export class GetAction {
             nField.setUid(createFieldUUID())
             nField.setCheckbox(nChekBox)
             nField.setRenderFunc('RenderCheckBox')
+            nField.setIsRequired(false)
             return nField;
 
       }
@@ -79,6 +83,7 @@ export class GetAction {
                 nField.setUid(createFieldUUID())
                 nField.setDropdown(nDropDown)
                 nField.setRenderFunc('RenderDropDown')
+                nField.setIsRequired(false)
             return nField;
       }
       this.GetDate=function () {
@@ -88,6 +93,7 @@ export class GetAction {
                 nField.setUid(createFieldUUID())
                 nField.setDate(nDate)
                 nField.setRenderFunc('RenderDate')
+                nField.setIsRequired(false)
           return nField;
 
       }
@@ -98,6 +104,7 @@ export class GetAction {
             nField.setUid(createFieldUUID())
             nField.setLabel(nlabel)
             nField.setRenderFunc('RenderLabel')
+          nField.setIsRequired(false)
 
         return nField;
       }
@@ -111,6 +118,7 @@ export class GetAction {
         nField.setUid(createFieldUUID())
         nField.setRange(nRange)
         nField.setRenderFunc('RenderRange')
+          nField.setIsRequired(false)
     
         return nField;
       }
@@ -125,10 +133,33 @@ export class GetAction {
             nField.setUid(createFieldUUID())
             nField.setImage(nImage)
             nField.setRenderFunc('RenderImage')
+          nField.setIsRequired(false)
           return nField;
 
 
       }
+     this.GetTextArea=function(){
+        const nTextArea=new TextArea()
+         nTextArea.setLabel("Enter your Label here")
+         const nField = new Field()
+         nField.setUid(createFieldUUID())
+         nField.setTextarea(nTextArea)
+         nField.setRenderFunc('RenderTextArea')
+         nField.setIsRequired(false)
+         return nField;
+     }
+     this.GetFileUpload=function () {
+        const nFileUpload=new FileUpload()
+         nFileUpload.setLabel("Enter ur your Label here")
+         const nfield=new Field()
+         nfield.setUid(createFieldUUID()+"file")
+         nfield.setFileupload(nFileUpload)
+         nfield.setRenderFunc("RenderFileUpload")
+         nfield.setIsRequired(true)
+         return nfield;
+
+
+     }
 
     }
 }
