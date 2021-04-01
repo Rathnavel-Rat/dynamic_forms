@@ -22,14 +22,14 @@ ___
 
 Output:
 
-![](https://drive.google.com/file/d/1DdvT9WlrFJ6ZlcpOlivcgkayOZyvCt2f/view?usp=sharing )
+![](https://drive.google.com/uc?export=view&id=1DdvT9WlrFJ6ZlcpOlivcgkayOZyvCt2f )
 
-![](https://drive.google.com/file/d/1WNPaBpBqK90x__JettaEJxT97XYs7T4U/view?usp=sharing)
+![](https://drive.google.com/uc?export=view&id=1WNPaBpBqK90x__JettaEJxT97XYs7T4U)
 
-![](https://drive.google.com/file/d/1x_ua5rEIrcriepmZLutf85EnxdHN3vJ0/view?usp=sharing)
+![](https://drive.google.com/uc?export=view&id=1x_ua5rEIrcriepmZLutf85EnxdHN3vJ0)
 
-![](https://drive.google.com/file/d/1c2X-jpddZATAu_A20JLhvocfyuKYhdHf/view?usp=sharing)
+![](https://drive.google.com/uc?export=view&id=1c2X-jpddZATAu_A20JLhvocfyuKYhdHf)
 
-![](https://drive.google.com/file/d/1Uscsveol8p7IFdY2KGr_0XUwgOZgvD_d/view?usp=sharing)
+![](https://drive.google.com/uc?export=view&id=1Uscsveol8p7IFdY2KGr_0XUwgOZgvD_d)
 
-![](https://drive.google.com/file/d/1IpozMfT3DXwkrWBPn9X3LjEohlkAnlZ0/view?usp=sharing)
+![](https://drive.google.com/uc?export=view&id=1IpozMfT3DXwkrWBPn9X3LjEohlkAnlZ0)
