@@ -2,6 +2,8 @@ Backend-API :  [Django](https://github.com/Rathnavel-Rat/backend_Rest "Project L
 
 Frontend    :  REACT JS
 
+This project contains protobuf for structuring data.
+
 _steps to run Django:_
 ---
 -->configure your database
