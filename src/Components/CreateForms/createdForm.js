@@ -11,7 +11,6 @@ import {
     Button,
     FormInput,
     Container,
-    Portal
 } from "semantic-ui-react";
 import Segment from "semantic-ui-react/dist/commonjs/elements/Segment";
 import { useForm,Controller } from "react-hook-form";
