@@ -56,6 +56,10 @@ export const MemoRadio=memo(function({item}){
         reset()
         dispatch(DragEdit())
     }
+    const setLabel=(e)=>{
+        Radio.setLabel(e.label)
+        dispatch(DragEdit())
+    }
     const DeleteAnItemFromList=  (pos) => {
         const s = [...Radio.getValuesList().slice(0, pos).concat(Radio.getValuesList().slice(pos + 1, item.getRadio().getValuesList().length))]
         item.getRadio().clearValuesList()
@@ -65,8 +69,11 @@ export const MemoRadio=memo(function({item}){
     }
       return(
           <div>
+              <Form onSubmit={handleSubmit(setLabel)}>
+                  <input type="text" defaultValue={Radio.getLabel()} placeholder={"current value:" + Radio.getLabel().toString()} name="label" ref={register()}/>
+                  <input value={"change"} type="submit"/>
+              </Form>
               <Form onSubmit={handleSubmit(AddValue)}>
-                  <input name="label" defaultValue={Radio.getLabel()}  ref={register()}   placeholder={"current value:"+Radio.getLabel().toString()}/>
               <Container>
                   <List >
                       {item.getRadio().getValuesList().map((e,i)=>(
@@ -81,8 +88,8 @@ export const MemoRadio=memo(function({item}){
                   </List>
               </Container>
 
-                  <input ref={register({ required: true})} required name="val" placeholder="Enter a value to add to list"  />
-                  <input type="submit"  value="Save"/>
+                  <input ref={register()} required name="val" placeholder="Enter a value to add to list"  />
+                  <input type="submit"  value="add"/>
               </Form>
           </div>
       )
@@ -111,7 +118,7 @@ export  const MemoNumber=memo(({item})=>{
     )
 })
 
-export  const MemoCheckbox=({item})=>{
+export  const MemoCheckbox=memo(({item})=>{
     const {register,handleSubmit}=useForm();
     const dispatch=useDispatch();
     const CheckBox=item.getCheckbox();
@@ -127,16 +134,20 @@ export  const MemoCheckbox=({item})=>{
             </Form>
         </div>
     )
-}
-export  const MemoDropDown=({item})=> {
+})
+export  const MemoDropDown=memo(({item})=> {
     const {register, reset,handleSubmit} = useForm()
     const dispatch = useDispatch();
     const DropDown = item.getDropdown();
 
     const AddValue=(e)=>{
         DropDown.setLabel(e.dropdownLabel)
-        DropDown.addItems(e.val)
+           DropDown.addItems(e.val)
         reset()
+        dispatch(DragEdit())
+    }
+    const setLabel=(e)=>{
+        DropDown.setLabel(e.dropdownLabel)
         dispatch(DragEdit())
     }
     const DeleteAnItemFromList=  (pos) => {
@@ -149,8 +160,11 @@ export  const MemoDropDown=({item})=> {
     return (
         <div>
             <div>
-                <Form onSubmit={handleSubmit(AddValue)}>
+                <Form onSubmit={handleSubmit(setLabel)}>
                     <input type="text" defaultValue={DropDown.getLabel()} placeholder={"current value:" + DropDown.getLabel().toString()} name="dropdownLabel" ref={register({required: true})}/>
+                    <input value={"change"} type="submit"/>
+                </Form>
+                <Form onSubmit={handleSubmit(AddValue)}>
                     <Container>
                         <List >
                             {DropDown.getItemsList().map((e,i)=>(
@@ -164,16 +178,16 @@ export  const MemoDropDown=({item})=> {
                             ))}
                         </List>
                     </Container>
-                    <input ref={register({ required: true})} required name="val" placeholder="Enter a value to add to list"  />
-                    <input type="submit"/>
+                    <input ref={register()} required name="val" placeholder="Enter a value to add to list"  />
+                    <input value="add" type="submit"/>
                 </Form>
             </div>
         </div>
     )
-}
+})
 
 
-export  const MemoDate=({item})=>{
+export  const MemoDate=memo(({item})=>{
     const {register,handleSubmit}=useForm();
     const dispatch=useDispatch();
     const Date=item.getDate();
@@ -189,10 +203,10 @@ export  const MemoDate=({item})=>{
             </Form>
         </div>
     )
-}
+})
 
 
-export const MemoImage=({item})=>{
+export const MemoImage=memo(({item})=>{
     const {register,handleSubmit}=useForm();
     const dispatch=useDispatch();
     const nImage=item.getImage();
@@ -207,21 +221,58 @@ export const MemoImage=({item})=>{
         <div>
             <Form onSubmit={handleSubmit(Save)}>
                 <input type="text" defaultValue={nImage.getImagelabel()} placeholder={"current value:"+nImage.getImagelabel().toString()}  name="label" ref={register({required:true})}/>
-                <select name="size" ref={register({})}>
-                    <option>small </option>
-                    <option>mini </option>
-                    <option>tiny </option>
-                    <option>medium </option>
-                    <option>large </option>
-                    <option>big </option>
-                    <option>huge </option>
-                    <option>massive </option>
+                <select name="size"  ref={register({})}>
+                    <option selected={"small"===nImage.getSize()}>small </option>
+                    <option selected={"mini"===nImage.getSize()}>mini </option>
+                    <option selected={"tiny"===nImage.getSize()}>tiny </option>
+                    <option selected={"medium"===nImage.getSize()}>medium </option>
+                    <option selected={"large"===nImage.getSize()}>large </option>
+                    <option selected={"big"===nImage.getSize()}>big </option>
+                    <option selected={"huge"===nImage.getSize()}>huge </option>
+                    <option selected={"massive"===nImage.getSize()}>massive </option>
                 </select>
                 <input type="checkbox" ref={register({})} name="rounded"  defaultChecked={nImage.getIsRounded()}  />Rounded<br/>
                 <input type="checkbox" ref={register({})} name="circular" defaultChecked={nImage.getIsCircular()}   />Circular
-                <Image size={nImage.getSize()} src={nImage.getImageurl()} alt={nImage.getImagelabel()}/>
+                <Image  rounded={nImage.getIsRounded()} circular={nImage.getIsCircular()} size={nImage.getSize()} src={nImage.getImageurl()} alt={nImage.getImagelabel()}/>
                 <input type="submit"/>
             </Form>
         </div>
     )
-}
+})
+
+export const MemoTextArea=memo(({item})=>{
+    const {register,handleSubmit}=useForm();
+    const dispatch=useDispatch();
+    const nTextArea=item.getTextarea();
+    const Save=(e)=>{
+        item.getTextarea().setLabel(e.label)
+        dispatch(DragEdit())
+    }
+    return(
+        <div>
+            <Form onSubmit={handleSubmit(Save)}>
+                <input type="text" defaultValue={nTextArea.getLabel()} placeholder={"current value:"+nTextArea.getLabel().toString()}  name="label" ref={register({required:true})}/>
+                <input type="submit"/>
+            </Form>
+        </div>
+    )
+})
+
+export const MemoFileUpload=memo(({item})=>{
+    const {register,handleSubmit}=useForm();
+    const dispatch=useDispatch();
+    const nFileUpload=item.getFileupload();
+    const Save=(e)=>{
+        item.getFileupload().setLabel(e.label)
+        dispatch(DragEdit())
+    }
+    return(
+        <div>
+            <Form onSubmit={handleSubmit(Save)}>
+                <input type="text" defaultValue={nFileUpload.getLabel()} placeholder={"current value:"+nFileUpload.getLabel().toString()}  name="label" ref={register({required:true})}/>
+                <input type="submit"/>
+            </Form>
+        </div>
+    )
+})
+

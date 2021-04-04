@@ -115,15 +115,17 @@ const ContentOne=()=>{
                         One
                     </Header>
                     <Container className={styles.details}>
-                        The Department of computer science(SF) is one of the Self-Financing courses started in 2007. The
-                        Department also offering Post-Graduate Diploma Courses
-                        in Computer Application, Certificate Courses in Software Testing and Mobile Application
-                        Development. The Research activities are carried out in the area
-                        of Image proccessing, Data Mining, Pattern Recognition, Wireless Sensor Network, IoT,
-                        Bio-Infromation etc. Students are excellent in developing web, mobile
-                        and IoT applications, activly participating and won Laurels in Hackathon events and
-                        Intercollegiate meets at National and State level. Every year the Department
-                        is organising intercollegiate meet TECNEST, workshops and seminars on current trends.
+                       -------------------------------------------------------
+                        ----------------------------------------
+                        -------------------------------------------------------
+                        ---------------------------------------------------------
+                        ---------------------------------------------------------------
+                        -----------------------------------------------------------------
+                        -----------------------
+                        --------------------------------------
+                        -----------------------------------------------------------
+                        -------------------------------------
+                        ------------------------------------------------------------
 
                     </Container>
 
@@ -148,11 +150,18 @@ const ContentTwo=()=>{
                     About the Department
                 </Header>
                 <Container className={styles.details} >
-                    The Department of computer science(SF) is one of the Self-Financing courses started in 2007. The Department also offering Post-Graduate Diploma Courses
-                    in Computer Application, Certificate Courses in Software Testing and Mobile Application Development. The Research activities are carried out in the area
-                    of Image proccessing, Data Mining, Pattern Recognition, Wireless Sensor Network, IoT, Bio-Infromation etc. Students are excellent in developing web, mobile
-                    and IoT applications, activly participating and won Laurels in Hackathon events and Intercollegiate meets at National and State level. Every year the Department
-                    is organising intercollegiate meet TECNEST, workshops and seminars on current trends.
+                    -------------------------------------------------------
+                    ----------------------------------------
+                    -------------------------------------------------------
+                    ---------------------------------------------------------
+                    ---------------------------------------------------------------
+                    -----------------------------------------------------------------
+                    -----------------------
+                    --------------------------------------
+                    -----------------------------------------------------------
+                    -------------------------------------
+                    ------------------------------------------------------------
+
 
                 </Container>
             </Grid.Column>
@@ -171,11 +180,17 @@ const ContentThree=()=>{
                     About the Department
                 </Header>
                 <Container className={styles.details} >
-                    The Department of computer science(SF) is one of the Self-Financing courses started in 2007. The Department also offering Post-Graduate Diploma Courses
-                    in Computer Application, Certificate Courses in Software Testing and Mobile Application Development. The Research activities are carried out in the area
-                    of Image proccessing, Data Mining, Pattern Recognition, Wireless Sensor Network, IoT, Bio-Infromation etc. Students are excellent in developing web, mobile
-                    and IoT applications, activly participating and won Laurels in Hackathon events and Intercollegiate meets at National and State level. Every year the Department
-                    is organising intercollegiate meet TECNEST, workshops and seminars on current trends.
+                    -------------------------------------------------------
+                    ----------------------------------------
+                    -------------------------------------------------------
+                    ---------------------------------------------------------
+                    ---------------------------------------------------------------
+                    -----------------------------------------------------------------
+                    -----------------------
+                    --------------------------------------
+                    -----------------------------------------------------------
+                    -------------------------------------
+                    ------------------------------------------------------------
 
                 </Container>
             </Grid.Column>

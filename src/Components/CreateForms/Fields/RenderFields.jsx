@@ -46,7 +46,7 @@ export class RenderProto{
         return(
             <ConnectForm>
                 {({register,control})=>(
-                       <Controller control={control}   defaultValue="" as={FormInput} width={5} name={item.getUid()} label={item.getText().getLabel()}  ref={register({required:{value: item.getIsRequired(),message:"" }})}   />
+                       <Controller control={control} required={item.getIsRequired()}   defaultValue="" as={FormInput} width={5} name={item.getUid()} label={item.getText().getLabel()}  ref={register({required:{value: item.getIsRequired(),message:"" }})}   />
 
                 )}
             </ConnectForm>
@@ -110,7 +110,7 @@ export class RenderProto{
         return(
             <ConnectForm>
                 {({register,control})=>(
-                <Controller control={control} as={Form.Input} defaultValue=""  width={5}  ref={register({required:{value: item.getIsRequired(),message:"" }})}  label={item.getDate().getLabel()} type="Date" name={item.getUid()} />)}
+                <Controller control={control} as={Form.Input} required={item.getIsRequired()} defaultValue=""  width={5}  ref={register({required:{value: item.getIsRequired(),message:"" }})}  label={item.getDate().getLabel()} type="Date" name={item.getUid()} />)}
             </ConnectForm>
         )
     }
@@ -132,10 +132,11 @@ export class RenderProto{
         )
     }
     this.RenderImage=function(item){
+        console.log(item.getImage().getIsRounded(),"kk")
         return(
             <div>
                 <Label content={item.getImage().getImagelabel()}/>
-                <Image  size={item.getImage().getSize()} src={item.getImage().getImageurl()} rounded={item.getImage().setIsRounded()} circular={item.getImage().setIsCircular()}/>
+                <Image  size={item.getImage().getSize()} src={item.getImage().getImageurl()} rounded={item.getImage().getIsRounded()} circular={item.getImage().getIsCircular()}/>
             </div>
         )
     }
@@ -156,7 +157,7 @@ export class RenderProto{
                 <Label content={item.getFileupload().getLabel()}/>
                 <ConnectForm>
                     {({register,control})=>(
-                        <input type="file" defaultValue=""  width={10}  ref={register({required:{value: item.getIsRequired(),message:"" }})}   name={item.getUid()} />)}
+                        <input type="file" required={item.getIsRequired()} defaultValue=""  width={10}  ref={register({required:{value: item.getIsRequired(),message:"" }})}   name={item.getUid()} />)}
                 </ConnectForm>
             </div>
         )

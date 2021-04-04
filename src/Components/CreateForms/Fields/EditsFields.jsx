@@ -1,4 +1,14 @@
-import {Memolabel, MemoNumber, MemoRadio,MemoCheckbox,MemoDropDown,MemoDate,MemoText,MemoImage} from './MemoEditFields'
+import {
+    Memolabel,
+    MemoNumber,
+    MemoRadio,
+    MemoCheckbox,
+    MemoDropDown,
+    MemoDate,
+    MemoText,
+    MemoImage,
+    MemoTextArea, MemoFileUpload
+} from './MemoEditFields'
 export class EditRenderField{
     constructor() {
         this.RenderText=(item)=>{return <MemoText item={item}/>}
@@ -9,5 +19,7 @@ export class EditRenderField{
         this.RenderDropDown=(item)=>{return<MemoDropDown item={item}/>}
         this.RenderDate=(item)=>{return <MemoDate item={item}/>}
         this.RenderImage=(item)=>{return <MemoImage item={item}/>}
+        this.RenderTextArea=(item)=>{return <MemoTextArea item={item}/>}
+        this.RenderFileUpload=(item)=>{return <MemoFileUpload item={item}/>}
     }
 }

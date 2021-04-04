@@ -14,6 +14,13 @@ _steps to run Django:_
            set EMAIL_HOST_PASSWORD=password
            set FRONTEND_URL=url (http://localhost:3000)
     Make sure to turn on less secure app in gmail account       
+-->env.bat
+
+-->python manage.py makemigrations
+
+-->python manage.py migrate
+
+-->python manage.py runserver
 
 *__REACT JS:__*
 ___

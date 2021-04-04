@@ -1,11 +1,11 @@
 import React,{memo,useReducer,useEffect} from 'react'
 import { Draggable, Droppable } from 'react-beautiful-dnd'
 import { useDispatch, useSelector } from 'react-redux'
-import {Modal, Segment, Icon, Label, Form, Header, Container,} from 'semantic-ui-react'
+import {Modal, Segment, Icon, Radio,Label, Form, Header, Container,} from 'semantic-ui-react'
 import {
     DeleteAllElementsInAPage,
     DeleteAnDrags,
-    DeleteAPage,
+    DeleteAPage, DragEdit,
     LoadPage,
     RemoveAllDrags,
     SetDragItem
@@ -144,13 +144,13 @@ const  EachItem=({item,provided,formId}) =>{
 
   return (
                                <Segment textAlign="left"  secondary  >
-                            
+
                                  <Label color="orange" attached="top left" ribbon style={{width:"min-content"}} icon="align justify" {...provided.dragHandleProps} />
                                 
                                  <Label  attached="bottom right" onClick={()=>{dispatch(DeleteAnDrags({formId:formId,elementId:item.getUid()}))}} color="red" style={{width:"min-content"}} icon="trash alternate"  />  <br></br>
                                    <CustomModal item={item}/>
                                    {field}
-                                 
+                                 <Radio toggle onChange={()=>{item.setIsRequired(!item.getIsRequired())}} defaultChecked={item.getIsRequired()}/>Mandatory Field
                                 </Segment >
   )
 }
