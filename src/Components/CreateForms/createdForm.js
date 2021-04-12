@@ -9,8 +9,10 @@ import {
     Form,
     Modal,
     Button,
+    Label,
     FormInput,
     Container,
+    Radio,
 } from "semantic-ui-react";
 import Segment from "semantic-ui-react/dist/commonjs/elements/Segment";
 import { useForm,Controller } from "react-hook-form";
@@ -31,30 +33,38 @@ const CreatedForm = () => {
     useEffect(()=> dispatch(FetchCreatedFormAPICall()),[])
 
 
+    function FormVisisble(form_id,isAvailable) {
+        Axios().post("dynamicforms/MakeFormVisible",{form_id:form_id,isPublish:isAvailable}).then(e=>{}).catch(e=>{})
+
+    }
+
     return (
         <Grid textAlign='center' verticalAlign='middle' >
-            <Grid.Column as={Segment} raised  style={{maxWidth:"550px",marginTop:70}}>
+            <Grid.Column as={Segment} raised  style={{maxWidth:"650px",marginTop:70}}>
         <Segment    fluid text  textAlign="center" >
-            <List animated   >
+            <List animated divided   >
             {data.data.map(e=>(
                 <List.Item as={Container}  >
+                    <EditNameForms item={e}/>
                 <List.Content floated="right" >
-                    <Icon  name="edit"
-                          onClick={()=>{
-                                dispatch(FetchBinaryDataApiCall({"form_id":e.form_id}))
-                                    .then(e=>{
-                                    dispatch(CurrentForm(e.data))
-                                    history.push("/createForm")
+                    <Button icon  onClick={()=>{
+                        dispatch(FetchBinaryDataApiCall({"form_id":e.form_id}))
+                            .then(e=>{
+                                dispatch(CurrentForm(e.data))
+                                history.push("/createForm")
 
-                                })
-                          }}  color="blue" />
+                            })
+                    }} >
+                    <Icon  name="edit"
+                          color="blue" /></Button>
                       <Copy access_id={e.access_id}/>
                       <Button content="Click To See Responses" icon="eye" onClick={()=>{
                            dispatch(GetFormResponsesApiCall({"form_id":e.form_id})).then().catch()
                           history.push("/ViewFormResponses")}}/>
                     <DeleteFormModal dispatch={dispatch} id={e.form_id} name={e.name}/>
+                    <Radio onChange={()=>FormVisisble(e.form_id,!e.isPublish)} toggle  defaultChecked={e.isPublish} />
                 </List.Content>
-                <EditNameForms item={e}/>
+
 
             </List.Item>))}
 
@@ -73,7 +83,7 @@ const EditNameForms=memo(({item})=>{
         Axios().patch("dynamicforms/updateName",data).then(e=>console.log(e)).catch(e=>console.log("lool",e))
     }
     return(
-        <List.Content  floated="left"><Icon color="blue" name="dot circle"/>
+        <List.Content  style={{marginTop: 10}} floated="left"><Icon color="blue" name="dot circle"/>
         {!isIconEdit? item.name:
             <div>
                 <input id="newName" style={{width:"100px",height:"q20px"}} type="text"  placeholder={item.name} defaultValue={item.name}/>
@@ -116,7 +126,10 @@ const DeleteFormModal=({dispatch,id,name})=>{
     const[state,dispatches]=useReducer(modalReducer,{isOpen:false})
 
     return(
-        <Modal trigger={<Icon color="blue" name="delete" onClick={()=>{dispatches({type:"OPEN"})}} />} closeIcon   open={state.isOpen} onClose={()=>{dispatches({type:"CLOSE"})}}>
+
+        <Modal trigger={<Button icon onClick={()=>{dispatches({type:"OPEN"})}}>
+            <Icon color="blue" name="trash" hint={"delete"}  />
+        </Button>} closeIcon   open={state.isOpen} onClose={()=>{dispatches({type:"CLOSE"})}}>
         <Modal.Header>Are sure you wanna delete</Modal.Header>
         <Modal.Description textAlign="center">
          <h1> {name}</h1>
@@ -144,7 +157,9 @@ const  Copy= ({access_id}) =>{
         return (
 
                 <TransitionablePortal
-                    trigger={<Icon color="blue" name="clipboard" onClick={()=>{dispatches({type:"OPEN"});copyToClipboard(access_id)}} />}
+                    trigger={ <Button icon onClick={()=>{dispatches({type:"OPEN"});copyToClipboard(access_id)}} >
+                        <Icon color="blue" name="clipboard" />
+                    </Button>}
                     onClose={()=>dispatches({type:"CLOSE"})}  open={state.isOpen}>
                     <Segment style={{ left: '40%', position: 'fixed', top: '50%', zIndex: 1000 }}>
                         Form Access Id Copied to Clipboard

@@ -5,6 +5,7 @@ import {
 } from "./type";
 import {RequestFormRepsonses, RequestFormRepsonsesFailure, RequestFormRepsonsesSuccess} from "./actions";
 import Axios from "../../axiosConfig";
+import {act} from "@testing-library/react";
 
 
 
@@ -26,12 +27,14 @@ export const FromResponseReducers=(state=initState,action)=>{
                 message: "Failed"
             }
         case GET_FORM_RESPONSES_REQUEST_SUCCESS:
+            console.log(action.data)
             return {
                 ...state,
                 message: "success",
-                form_id :action.data["Form"],
-                list:action.data["List"],
-                name:action.data["FormName"]
+                form_id :action.data.data["Form"],
+                list:action.data.data["List"],
+                name:action.data.data["FormName"],
+                binaryData:action.data["binaryData"]
             }
         case RESET_FORM_RESPONSES:
             return {
@@ -39,6 +42,7 @@ export const FromResponseReducers=(state=initState,action)=>{
                 name:"",
                 form_id:"",
                 message:"",
+                binaryData:null,
                 list:null
 
             }
@@ -52,7 +56,8 @@ export const GetFormResponsesApiCall=(data)=>(dispatch)=>{
     return new Promise((resolve,reject)=> {
         dispatch(RequestFormRepsonses())
         Axios().post("dynamicforms/GetResponse",{"Form":data.form_id}).then(e=>{
-            dispatch(RequestFormRepsonsesSuccess(e.data["data"]))
+            console.log(e.data,"kkk")
+            dispatch(RequestFormRepsonsesSuccess(e.data.data))
             return resolve({isSuccess:true})
         }).catch(e=>{
             dispatch(RequestFormRepsonsesFailure())

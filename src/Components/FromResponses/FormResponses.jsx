@@ -1,30 +1,50 @@
-import React, {useEffect} from 'react';
-import {Table,Header,Rating} from "semantic-ui-react";
+import React, {memo, useEffect} from 'react';
+import {Table, Popup, Container} from "semantic-ui-react";
 import {useDispatch, useSelector} from "react-redux";
 import {ResetFormResponses} from "../Redux/GetFormReponses/actions";
+import {ListPageForm} from "../CreateForms/protobuf/Fields_pb";
+import {LabelFromProto} from "./getLabebId";
 
 const ViewFormResponses = () => {
     const dispatch=useDispatch()
+    let state= useSelector(state=>state.getFromResponses)
     useEffect(()=>{
         return ()=>{
             dispatch(ResetFormResponses())
         }
     },[])
-     const state= useSelector(state=>state.getFromResponses)
+
+
+
+
     return (
         <div>
-            <h1>{state.name}</h1>
-
-            {state.list!==null&&state.list.length!==0 ? <TableView data={state.list}/>:null}
+            <Container>
+                <h1>{state.name}</h1>
+                {state.list!==null&&state.list.length!==0 ? <div>no of Responses:{state.list.length}</div>:<div>0<br/>Responses</div>}
+            </Container>
+            {state.list!==null&&state.list.length!==0 ? <TableView binData={state.binaryData} data={state.list}/>:null}
         </div>
     );
 };
 
 export default ViewFormResponses;
 
-const TableView=({data})=>{
-       const array=[]
-     console.log("ss",data)
+const getLabelForId=(data)=>{
+    const a={}
+    const getLabelId=new LabelFromProto()
+    data.getPageList().forEach(e=>e.getFieldsList().forEach(i=>{
+        if(String(i.getRenderFunc())!=="RenderLabel")
+        a[i.getUid()]= getLabelId[String(i.getRenderFunc())](i)}
+    ))
+    return a;
+}
+
+const TableView=memo(({data,binData})=>{
+
+    const array=[]
+    const labelIdData=getLabelForId(ListPageForm.deserializeBinary(binData))
+
     for (const p in data[0])
             if( data[0].hasOwnProperty(p) && p!=="Responses" )
                 array.push(p)
@@ -34,12 +54,13 @@ const TableView=({data})=>{
             array.push(p)
 
     return(
-        <Table stackable  sorted={true}>
+        <Table stackable  sorted={true} celled striped selectable role="grid" aria-labelledby="header">
             <Table.Header>
                 <Table.Row>
 
                     {array.map((e,i)=>(
-                        <Table.HeaderCell  key={i}>{e}</Table.HeaderCell>
+
+                        <Popup  content={labelIdData[e]} trigger={ <Table.HeaderCell style={{cursor:"pointer"}}  key={i}>{e}</Table.HeaderCell>} />
                     ))}
                 </Table.Row>
             </Table.Header>
@@ -60,4 +81,4 @@ const TableView=({data})=>{
                 </Table.Body>
         </Table>
     )
-}
+})

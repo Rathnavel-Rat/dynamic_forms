@@ -5,12 +5,11 @@ import {Modal, Segment, Icon, Radio,Label, Form, Header, Container,} from 'seman
 import {
     DeleteAllElementsInAPage,
     DeleteAnDrags,
-    DeleteAPage, DragEdit,
+    DeleteAPage,
     LoadPage,
     RemoveAllDrags,
-    SetDragItem
 } from '../Redux/DnDItems/action'
-import {ListFields,ListPageForm} from './protobuf/Fields_pb'
+import {ListPageForm} from './protobuf/Fields_pb'
 import { RenderProto } from './Fields/RenderFields'
 import {EditRenderField} from "./Fields/EditsFields";
 import { useForm, useFormContext, FormProvider, Controller } from "react-hook-form";
@@ -52,7 +51,7 @@ function ItemDrops() {
   }
 
     return (
-        <Segment secondary  stacked>
+        <Segment style={{backgroundColor:"#e7b6df29"}} secondary  stacked>
           <Segment>
           <Label size={50} onClick={()=>dispatch(RemoveAllDrags())} color="red" attached="top right" style={{paddingRight:"18px",height:"10Ppx"}} icon="remove"   removeIcon />
           <Header> Drag Items from toolbar and place it below  </Header>
@@ -150,7 +149,8 @@ const  EachItem=({item,provided,formId}) =>{
                                  <Label  attached="bottom right" onClick={()=>{dispatch(DeleteAnDrags({formId:formId,elementId:item.getUid()}))}} color="red" style={{width:"min-content"}} icon="trash alternate"  />  <br></br>
                                    <CustomModal item={item}/>
                                    {field}
-                                 <Radio toggle onChange={()=>{item.setIsRequired(!item.getIsRequired())}} defaultChecked={item.getIsRequired()}/>Mandatory Field
+                                 <Radio style={{height:10}} toggle onChange={()=>{item.setIsRequired(!item.getIsRequired())}} defaultChecked={item.getIsRequired()}/>Mandatory Field
+
                                 </Segment >
   )
 }

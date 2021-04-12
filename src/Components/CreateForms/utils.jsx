@@ -14,7 +14,7 @@ export function createFieldUUID() {
     return s.join("");
 }
 export function base64ToArrayBuffer(base64) { // use while rerender
-
+    console.log("base",base64)
     try{
         const binary_string = window.atob(base64);
         const len = binary_string.length;

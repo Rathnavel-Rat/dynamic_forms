@@ -1,5 +1,17 @@
 import React, { memo,useReducer, useState} from 'react';
-import {Button, Container, Divider, Form, FormInput, Grid, List, Modal, Segment} from 'semantic-ui-react'
+import {
+    Button,
+    Container,
+    Divider,
+    Form,
+    FormInput,
+    Grid,
+    Icon,
+    List,
+    Modal,
+    Segment,
+    TransitionablePortal
+} from 'semantic-ui-react'
 import {useForm,Controller, FormProvider} from "react-hook-form";
 import Axios from "../axiosConfig";
 import {base64ToArrayBuffer} from "../CreateForms/utils";
@@ -15,18 +27,30 @@ const RespondToForm = () => {
     const {register,handleSubmit,errors,control}= useForm()
     const state=useSelector(state=>state.respondToForm)
     const dispatch=useDispatch()
+    const[states,dispatches]=useReducer(modalReducer,{isOpen:false})
+    const[msg,setmsg]=useState("")
     const Search=(e)=>{
+        setPageForm([])
         dispatch(SetFormAccessId({access_id:e.key}))
         Axios().get("dynamicforms/AccessForm", {
             params: {
                 access_id: e.key,
             }
         }).then(e=>{
-            const data= base64ToArrayBuffer(e.data.data)
-            setPageForm(ListPageForm.deserializeBinary(data).getPageList())
+            console.log(e.data,"kk")
+            if(e.data["success"]){
+              const data= base64ToArrayBuffer(e.data.data)
+             setPageForm(ListPageForm.deserializeBinary(data).getPageList())}
+            else{
+              dispatches({type:"OPEN"})
+                setmsg("Form do not support any responses.Contact owner of the form \n")
+            }
         }).catch(e=>{
+            dispatches({type:"OPEN"})
+            setmsg(e.response.data["non_field_errors"])
 
         })
+
     }
 
 
@@ -35,7 +59,7 @@ const RespondToForm = () => {
             <Grid textAlign="center" verticalAlign="middle">
                 <Grid.Column style={{ maxWidth: "450px" }} >
                     <Container fluid textAlign={"center"} text>
-                <Form  onSubmit={handleSubmit(Search)}>
+                <Form  onSubmit={handleSubmit(Search)} >
                 <Controller as={Form.Input} control={control}
                             ref={register({required:{value:true,message:"Please enter a valid id"}})}
                             name="key"
@@ -50,6 +74,16 @@ const RespondToForm = () => {
                     {state.access_id!==null ? <FormDisplay  data={PageForm}/>:null}
                 </Grid.Column>
             </Grid>
+            <TransitionablePortal onClose={()=>dispatches({type:"CLOSE"})}  open={states.isOpen}>
+                <Grid centered stackable textAlign="center" verticalAlign="middle" >
+
+                <Segment  textAlign={"center"} stacked  style={{  zIndex: 1000,border:" 2px solid black",backgroundColor:"#55f3e01f" }}>
+                    {msg}
+                </Segment>
+
+
+                </Grid>
+            </TransitionablePortal>
         </div>
     );
 };
@@ -85,6 +119,7 @@ const FormDisplay=({data})=>{
                     Axios().post("dynamicforms/SubmitResponse", _data).then(e => {
                         setMsg("submitted successFully")
                         dispatches({type: "OPEN"})
+                        methods.reset()
                     }).catch(e => {
                         setMsg(e.response.data['non_field_errors'])
                         dispatches({type: "OPEN"})
@@ -103,19 +138,21 @@ const FormDisplay=({data})=>{
             Axios().post("dynamicforms/SubmitResponse",_data).then(e=>{
                 setMsg("submitted successFully")
                 dispatches({type:"OPEN"})
+
             }).catch(e=>{
                 setMsg(e.response.data['non_field_errors'])
                 dispatches({type:"OPEN"})
             })
         }
+        methods.reset()
     }
     return(
         <FormProvider {...methods} >
-                    <Form  onSubmit={methods.handleSubmit(submit)} width={"equal"}>
+                    <Form  unstackable onSubmit={methods.handleSubmit(submit)} width={"equal"}>
                         {data.map((e,i)=>(
                             <FromFrame  data={e.getFieldsList()}/>
                         ))}
-                        <Form.Button content="submit" primary  />
+                        {data.length>0 ? <Form.Button content="submit" primary  />:null}
                     </Form>
             <ErrorModal isOpen={states.isOpen} msg={msg} dispatches={dispatches} />
         </FormProvider>
@@ -147,7 +184,6 @@ const RenderEachItem=({item})=>{
 }
 
 const ErrorModal=memo(({isOpen,msg,dispatches})=>{
-    console.log(isOpen)
     return(
         <Modal size={"tiny"}   closeIcon  open={isOpen} onClose={()=>{dispatches({type:"CLOSE"})}}>
             <Modal.Content >

@@ -35,6 +35,7 @@ export class RenderProto{
     this.RenderNumber=function (item) {
       return(
           <ConnectForm>
+
               {({register,control})=>(
           <Controller control={control}  required={item.getIsRequired()}   defaultValue="" as={FormInput} ref={register({})}  width={5} label={item.getNumber().getLabel()}    name={item.getUid()} type="number" min={item.getNumber().getMin()} max={item.getNumber().getMax()}/>
               )}
@@ -132,7 +133,6 @@ export class RenderProto{
         )
     }
     this.RenderImage=function(item){
-        console.log(item.getImage().getIsRounded(),"kk")
         return(
             <div>
                 <Label content={item.getImage().getImagelabel()}/>
