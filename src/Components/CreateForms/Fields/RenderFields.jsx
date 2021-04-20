@@ -1,8 +1,9 @@
 import React from 'react'
-import {Checkbox, Form, FormCheckbox, Image, Label, Radio, Segment} from 'semantic-ui-react';
+import {Checkbox, Form, FormCheckbox, Image, Label, Popup, Radio, Segment, Table} from 'semantic-ui-react';
 import FormInput from "semantic-ui-react/dist/commonjs/collections/Form/FormInput";
 import {ConnectForm} from "./ConnectForm";
 import {Controller} from "react-hook-form";
+import {Link} from "react-router-dom";
 
 
 
@@ -58,7 +59,7 @@ export class RenderProto{
             return(
                 <ConnectForm>
                     {({register,control})=>(
-                        <Controller control={control} as={Form.Input} defaultValue="" type="email" width={5} name={item.getUid()} label={item.getText().getLabel()}  ref={register({required:{value: item.getIsRequired(),message:"" }})}   />
+                        <Controller  required={item.getIsRequired()}  control={control} as={Form.Input} defaultValue="" type="email" width={5} name={item.getUid()} label={item.getText().getLabel()}  ref={register({required:{value: item.getIsRequired(),message:"" }})}   />
                     )}
                 </ConnectForm>
             )
@@ -133,10 +134,11 @@ export class RenderProto{
         )
     }
     this.RenderImage=function(item){
+        const url=item.getImage().getImageurl().toString()
         return(
             <div>
                 <Label content={item.getImage().getImagelabel()}/>
-                <Image  size={item.getImage().getSize()} src={item.getImage().getImageurl()} rounded={item.getImage().getIsRounded()} circular={item.getImage().getIsCircular()}/>
+                <Image  size={item.getImage().getSize()} src={url} rounded={item.getImage().getIsRounded()} circular={item.getImage().getIsCircular()}/>
             </div>
         )
     }
@@ -157,10 +159,18 @@ export class RenderProto{
                 <Label content={item.getFileupload().getLabel()}/>
                 <ConnectForm>
                     {({register,control})=>(
-                        <input type="file" required={item.getIsRequired()} defaultValue=""  width={10}  ref={register({required:{value: item.getIsRequired(),message:"" }})}   name={item.getUid()} />)}
+                        <input type="file" required={true} defaultValue=""  width={10}  ref={register({required:{value: item.getIsRequired(),message:"" }})}   name={item.getUid()} />)}
                 </ConnectForm>
             </div>
         )
+    }
+    this.RenderLink=function (item) {
+        return(
+            <div>
+                <Popup   content={item.getLink().getLabel()} trigger={ <a target="_blank" href={item.getLink().getUrl()}><Label content={item.getLink().getPopupString()}/></a>} />
+            </div>
+        )
+
     }
 
 

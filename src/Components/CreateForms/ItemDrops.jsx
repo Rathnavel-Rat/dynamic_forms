@@ -17,6 +17,7 @@ import Axios from "../axiosConfig";
 import {ExceptionList} from "./Fields/ExceptionList";
 import {modalReducer} from "../ModalReducer/ModalReducer";
 import {base64ToArrayBuffer,bufferToBase64} from "./utils";
+import {Exceptions} from "./ExcetionMandatory";
 
 
 
@@ -140,6 +141,7 @@ const  EachItem=({item,provided,formId}) =>{
     const field = nRenderProto[String(item.getRenderFunc())](item);
 
     const dispatch = useDispatch();
+    const isMandatoryRadioRequired=Exceptions.filter(e => e === item.getRenderFunc()).length !== 1;
 
   return (
                                <Segment textAlign="left"  secondary  >
@@ -149,7 +151,8 @@ const  EachItem=({item,provided,formId}) =>{
                                  <Label  attached="bottom right" onClick={()=>{dispatch(DeleteAnDrags({formId:formId,elementId:item.getUid()}))}} color="red" style={{width:"min-content"}} icon="trash alternate"  />  <br></br>
                                    <CustomModal item={item}/>
                                    {field}
-                                 <Radio style={{height:10}} toggle onChange={()=>{item.setIsRequired(!item.getIsRequired())}} defaultChecked={item.getIsRequired()}/>Mandatory Field
+                                   {isMandatoryRadioRequired ?
+                                   <Radio style={{height:10}} toggle onChange={()=>{item.setIsRequired(!item.getIsRequired())}} label="Mandatory" defaultChecked={item.getIsRequired()}/> :null}
 
                                 </Segment >
   )

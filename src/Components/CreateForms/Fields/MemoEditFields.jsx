@@ -2,7 +2,8 @@ import React, {memo, useReducer, useState} from 'react'
 import {useForm} from "react-hook-form";
 import {useDispatch} from "react-redux";
 import {DragEdit} from "../../Redux/DnDItems/action";
-import {Form, Portal, Container, List, Icon, Image} from "semantic-ui-react";
+import {Form, Portal, Button, Container, List, Icon, Image, Input} from "semantic-ui-react";
+import Axios from "../../axiosConfig";
 
 export const MemoText=memo(({item})=>{
     const {register,handleSubmit}=useForm();
@@ -217,7 +218,22 @@ export const MemoImage=memo(({item})=>{
         item.getImage().setIsCircular(e.circular)
         dispatch(DragEdit())
     }
+    const UploadFile=(e)=>{
+        const formdata=new FormData()
+        formdata.append("file",e.file[0])
+        Axios().post("dynamicforms/FileUploadForm", formdata, {
+                'Content-Type': 'multipart/form-data',
+            }
+        ).then(e=>{
+                item.getImage().setImageurl((e.data["link"]))
+                dispatch(DragEdit())
+        }
+        ).catch()
+
+    }
+
     return(
+        <div>
         <div>
             <Form onSubmit={handleSubmit(Save)}>
                 <input type="text" defaultValue={nImage.getImagelabel()} placeholder={"current value:"+nImage.getImagelabel().toString()}  name="label" ref={register({required:true})}/>
@@ -234,8 +250,15 @@ export const MemoImage=memo(({item})=>{
                 <input type="checkbox" ref={register({})} name="rounded"  defaultChecked={nImage.getIsRounded()}  />Rounded<br/>
                 <input type="checkbox" ref={register({})} name="circular" defaultChecked={nImage.getIsCircular()}   />Circular
                 <Image  rounded={nImage.getIsRounded()} circular={nImage.getIsCircular()} size={nImage.getSize()} src={nImage.getImageurl()} alt={nImage.getImagelabel()}/>
-                <input type="submit"/>
+                <Input  type="submit" value={"update"}/>
             </Form>
+
+        </div>
+    <Form onSubmit={handleSubmit(UploadFile)} enctype="multipart/form-data">
+
+        <input  name="file" ref={register({})} type="file"/>
+        <Input  type="submit" value={"upload"}/>
+    </Form>
         </div>
     )
 })
@@ -275,4 +298,30 @@ export const MemoFileUpload=memo(({item})=>{
         </div>
     )
 })
+export const MemoLink=memo(({item})=>{
+    const {register,handleSubmit}=useForm();
+    const dispatch=useDispatch();
+    const nLink=item.getLink();
+    const Save=(e)=>{
+        item.getLink().setLabel(e.label)
+        item.getLink().setUrl(e.url)
+        item.getLink().setPopupString(e.popup)
+        dispatch(DragEdit())
+    }
+    return(
+        <div>
+            <Form onSubmit={handleSubmit(Save)}>
+                <input type="text"  defaultValue={nLink.getLabel()} placeholder={"current value:"+nLink.getLabel().toString()}  name="label" ref={register({required:true})}/>
+                <input type="text" name="url"  ref={register({required:true})} defaultValue={nLink.getUrl()}/>
+                <textarea name="popup" placeholder={"popup string"} ref={register({required:true})}>
+                    {nLink.getPopupString()}
+                </textarea>
+                <input type="submit"/>
+            </Form>
+        </div>
+    )
+})
+
+
+
 

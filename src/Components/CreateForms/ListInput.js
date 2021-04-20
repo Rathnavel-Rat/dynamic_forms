@@ -44,12 +44,7 @@ export const  items=[
         icon:'calendar check outline',
         action:"GetDate",
     },
-    {
-        id:"inputrange",
-        name:"range",
-        icon:"apple",
-        action:"GetRange",
-    },{
+   {
         id:"image",
         name:"image",
         icon:"image",
@@ -70,6 +65,11 @@ export const  items=[
         name:"fileUpload",
         icon:"file",
         action:"GetFileUpload"
+    },{
+    id:"link",
+     name:"link",
+        icon:"link",
+        action:"GetLink"
     }
 
 

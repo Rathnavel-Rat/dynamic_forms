@@ -24,6 +24,7 @@ message Field{
         DropDown dropdown=10;
         TextArea textarea=11;
         FileUpload fileupload=12;
+        Link link=16;
     }
     bool is_required=14;
     
@@ -87,4 +88,9 @@ message TextArea{
 message FileUpload{
     string label=1;
     string path=2;
+}
+message Link{
+    string label=1;
+    string url=2;
+    string popup_string=3;
 }

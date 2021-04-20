@@ -50,7 +50,7 @@ function Password() {
       <Grid textAlign='center' style={{ height: '80vh' }} verticalAlign='middle'>
       <Grid.Column style={{ maxWidth: 450 }} >
         <Header as='h2' textAlign='center'>
-          Sign-in to your account
+          PASSWORD RESET EMAIL VERIFICATION
         </Header>
         <Form size='large' onSubmit={handleSubmit(submitTo)}>
         <Segment stacked>

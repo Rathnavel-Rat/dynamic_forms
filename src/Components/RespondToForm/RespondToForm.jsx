@@ -37,7 +37,6 @@ const RespondToForm = () => {
                 access_id: e.key,
             }
         }).then(e=>{
-            console.log(e.data,"kk")
             if(e.data["success"]){
               const data= base64ToArrayBuffer(e.data.data)
              setPageForm(ListPageForm.deserializeBinary(data).getPageList())}

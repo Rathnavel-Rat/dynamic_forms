@@ -38,8 +38,7 @@ function MenuComponent(props) {
             <Dropdown item  text={userdata.username[0].toUpperCase()}>
                <Dropdown.Menu>
                 <Dropdown.Item >{userdata.email}</Dropdown.Item>
-                 <Dropdown.Item as={Link} to="/userSettings" >settings</Dropdown.Item>
-                 <Dropdown.Item as={Link} to="">change password</Dropdown.Item>
+                 <Dropdown.Item as={Link} to="/ForgotPassword">change password</Dropdown.Item>
                  <Dropdown.Item as={Button} onClick={()=>logout()} >logout</Dropdown.Item>
                 </Dropdown.Menu>
             </Dropdown>

@@ -1,5 +1,5 @@
 import { createFieldUUID } from "./utils"
-import {Field,Radio,Number,Text,validator,Checkbox,DropDown,Date,Label,Range,Image,TextArea,FileUpload} from "./protobuf/Fields_pb"
+import {Field,Radio,Number,Text,validator,Checkbox,DropDown,Date,Label,Range,Image,TextArea,FileUpload,Link} from "./protobuf/Fields_pb"
 
 export class GetAction {
     constructor() {
@@ -159,6 +159,18 @@ export class GetAction {
          return nfield;
 
 
+     }
+     this.GetLink=function () {
+            const nLink=new Link()
+            nLink.setUrl("https://www.google.com")
+            nLink.setLabel("Google")
+            nLink.setPopupString("Link to google")
+         const nfield=new Field()
+         nfield.setUid(createFieldUUID())
+         nfield.setLink(nLink)
+         nfield.setRenderFunc("RenderLink")
+         nfield.setIsRequired(false)
+         return nfield;
      }
 
     }

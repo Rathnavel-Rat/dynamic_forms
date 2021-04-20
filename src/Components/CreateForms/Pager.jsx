@@ -1,7 +1,7 @@
 import React from 'react';
 import {Button} from "semantic-ui-react";
 import {useDispatch, useSelector} from "react-redux";
-import {ListFields,ListPageForm} from './protobuf/Fields_pb'
+import {ListFields} from './protobuf/Fields_pb'
 import {uuidv4} from "./utils";
 import {AddFormPage} from "../Redux/DnDItems/action";
 const Pager = () => {

@@ -7,7 +7,7 @@ import {
     MemoDate,
     MemoText,
     MemoImage,
-    MemoTextArea, MemoFileUpload
+    MemoTextArea, MemoFileUpload, MemoLink
 } from './MemoEditFields'
 export class EditRenderField{
     constructor() {
@@ -21,5 +21,6 @@ export class EditRenderField{
         this.RenderImage=(item)=>{return <MemoImage item={item}/>}
         this.RenderTextArea=(item)=>{return <MemoTextArea item={item}/>}
         this.RenderFileUpload=(item)=>{return <MemoFileUpload item={item}/>}
+        this.RenderLink=(item)=>{return <MemoLink item={item} />}
     }
 }
