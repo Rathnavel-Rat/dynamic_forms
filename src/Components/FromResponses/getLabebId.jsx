@@ -33,6 +33,10 @@ export class LabelFromProto{
         this.RenderFileUpload= function(item){
             return item.getFileupload().getLabel().toString()
         }
+        this.RenderLink=function(item){
+            return item.getLink().getLabel().toString()
+
+        }
     }
 
 }

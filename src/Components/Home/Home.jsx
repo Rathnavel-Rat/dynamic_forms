@@ -123,7 +123,7 @@ const ContentTwo=()=>{
             </Grid.Column>
             <Grid.Column width={10}>
                 <Header style={{color:"white"}} size="large" >
-                    About the Department
+                   Two
                 </Header>
                 <Container className={styles.details} >
                     Pellentesque pellentesque volutpat bibendum. Mauris dapibus est non nunc sodales, in congue eros congue. Suspendisse dapibus tempor nunc in gravida. Morbi eu mauris vehicula, congue nunc in, consequat erat. Cras consequat tempus sapien, eget gravida quam pellentesque ac. Pellentesque interdum varius euismod. Etiam vitae velit vitae lacus pharetra finibus. Donec efficitur erat quis mauris condimentum laoreet. Suspendisse non ornare elit. Mauris scelerisque semper scelerisque. Donec accumsan tortor ut mollis tristique.
@@ -145,7 +145,7 @@ const ContentThree=()=>{
 
             <Grid.Column width={10}>
                 <Header style={{color:"white"}} size="large">
-                    About the Department
+                   Three
                 </Header>
                 <Container className={styles.details} >
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce odio diam, fermentum ut consectetur id, dignissim vel erat. Aenean orci est, dignissim sed pellentesque fringilla, tincidunt et felis. Vestibulum rhoncus aliquet nulla a vehicula. Donec dignissim lobortis est, ac malesuada sapien pulvinar non. Donec a lacus accumsan, ornare leo vel, semper elit. Donec eu massa et nunc aliquam ultricies. Cras quis mauris arcu. Nullam id mauris ac augue vehicula posuere a id tellus. Nunc consectetur nunc eget lorem accumsan blandit. Ut aliquam interdum dui, eget vestibulum ante ultrices in. Etiam sit amet risus vel ipsum maximus aliquam vitae in urna. Sed id dignissim ex. Curabitur malesuada venenatis ante vitae rutrum. Suspendisse aliquet faucibus neque, et scelerisque felis. Nunc eget auctor quam. Sed mollis purus eu diam egestas, a iaculis mauris cursus.

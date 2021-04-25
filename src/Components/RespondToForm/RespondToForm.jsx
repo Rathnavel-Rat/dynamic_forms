@@ -37,11 +37,12 @@ const RespondToForm = () => {
                 access_id: e.key,
             }
         }).then(e=>{
+            console.log(e,"kk")
             if(e.data["success"]){
               const data= base64ToArrayBuffer(e.data.data)
              setPageForm(ListPageForm.deserializeBinary(data).getPageList())}
             else{
-              dispatches({type:"OPEN"})
+                dispatches({type:"OPEN"})
                 setmsg("Form do not support any responses.Contact owner of the form \n")
             }
         }).catch(e=>{

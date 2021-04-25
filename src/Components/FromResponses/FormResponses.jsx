@@ -1,5 +1,5 @@
 import React, {memo, useEffect} from 'react';
-import {Table, Popup, Container} from "semantic-ui-react";
+import {Table, Popup, Container, Button} from "semantic-ui-react";
 import {useDispatch, useSelector} from "react-redux";
 import {ResetFormResponses} from "../Redux/GetFormReponses/actions";
 import {ListPageForm} from "../CreateForms/protobuf/Fields_pb";
@@ -23,7 +23,7 @@ const ViewFormResponses = () => {
                 <h1>{state.name}</h1>
                 {state.list!==null&&state.list.length!==0 ? <div>no of Responses:{state.list.length}</div>:<div>0<br/>Responses</div>}
             </Container>
-            {state.list!==null&&state.list.length!==0 ? <TableView binData={state.binaryData} data={state.list}/>:null}
+            {state.list!==null&&state.list.length!==0 ? <TableView tableName={state.name} binData={state.binaryData} data={state.list}/>:null}
         </div>
     );
 };
@@ -39,8 +39,58 @@ const getLabelForId=(data)=>{
     ))
     return a;
 }
+const to_csv=(tableName,table)=>
+    {
+        let i, j;
+        let csv = "";
 
-const TableView=memo(({data,binData})=>{
+
+        const table_headings = table.children[0].children[0].children;
+        const table_body_rows = table.children[1].children;
+
+        let heading;
+        const headingsArray = [];
+        for(i = 0; i < table_headings.length; i++) {
+            heading = table_headings[i];
+            headingsArray.push('"' + heading.innerHTML + '"');
+        }
+
+        csv += headingsArray.join(',') + "\n";
+
+        let row;
+        let columns;
+        let column;
+        let columnsArray;
+        for(i = 0; i < table_body_rows.length; i++) {
+            row = table_body_rows[i];
+            columns = row.children;
+            columnsArray = [];
+            for(j = 0; j < columns.length; j++) {
+                column = columns[j];
+                columnsArray.push('"' + column.innerHTML + '"');
+            }
+            csv += columnsArray.join(',') + "\n";
+        }
+
+        download(tableName+".csv",csv);
+    }
+    function download(filename, text) {
+        const pom = document.createElement('a');
+        pom.setAttribute('href', 'data:text/csv;charset=utf-8,' + encodeURIComponent(text));
+        pom.setAttribute('download', filename);
+
+        if (document.createEvent) {
+            var event = document.createEvent('MouseEvents');
+            event.initEvent('click', true, true);
+            pom.dispatchEvent(event);
+        }
+        else {
+            pom.click();
+        }
+
+    }
+
+const TableView=memo(({tableName,data,binData})=>{
 
     const array=[]
     const labelIdData=getLabelForId(ListPageForm.deserializeBinary(binData))
@@ -52,16 +102,21 @@ const TableView=memo(({data,binData})=>{
     for(const p in data[0].Responses)
         if(data[0].Responses.hasOwnProperty(p))
             array.push(p)
+    const TriggerDownload=()=>{
+        to_csv(tableName,document.getElementById('table1'))
+    }
 
     return(
-        <Table stackable  sorted={true} celled striped selectable role="grid" aria-labelledby="header">
+        <div>
+        <Table id={"table1"} stackable  sorted={true} celled striped selectable role="grid" aria-labelledby="header">
             <Table.Header>
                 <Table.Row>
+                    {array.map((e,i)=>
+                        i!==0?
+                        <Popup style={{cursor:"pointer"}} content={labelIdData[e]} trigger={ <Table.HeaderCell  key={i}>{labelIdData[e]}</Table.HeaderCell>} />:
+                            <Popup style={{cursor:"pointer"}}  trigger={ <Table.HeaderCell  key={i}>Mail/username</Table.HeaderCell>} />
 
-                    {array.map((e,i)=>(
-
-                        <Popup  content={labelIdData[e]} trigger={ <Table.HeaderCell style={{cursor:"pointer"}}  key={i}>{e}</Table.HeaderCell>} />
-                    ))}
+                    )}
                 </Table.Row>
             </Table.Header>
 
@@ -80,5 +135,7 @@ const TableView=memo(({data,binData})=>{
                         )})}
                 </Table.Body>
         </Table>
+            <Button onClick={()=>TriggerDownload()}>Download</Button>
+        </div>
     )
 })
