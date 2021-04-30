@@ -43,7 +43,7 @@ import CreativeFormHome from "../Home/Home";
                        <Route path="/userSettings"/>
                        <PublicRoute restricted={false} path="/Home" component={CreativeFormHome} />
                        <PublicRoute restricted={false} path="/ForgotPassword" component={Password}/>
-                       <PublicRoute restricted={true} path="/Login" component={Login} exact/>
+                       <PublicRoute restricted={true} path="/login" component={Login} exact/>
                        <PublicRoute restricted={true} path="/Register" component={Register} exact/> 
                        <PublicRoute restricted={false} path="/passwordReset:token_valid?/:message?/:uid64?/:token?" component={Passwordreset}/>
                        <Route path="/Logout"/>

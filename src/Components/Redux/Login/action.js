@@ -29,10 +29,8 @@ export const LoginApiCall=(data)=>{
         .then(
             response=>{
                 try{
-
                    dispatch(loginSuccess(response.data))
                    dispatch(userDetails(response.data))
-
                 }
                 catch(e){
                     dispatch(loginFailure("try again later"))
